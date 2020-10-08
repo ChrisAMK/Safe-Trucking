@@ -1,77 +1,40 @@
-# MERN Stack: Login
+# Google Books React&middot; ![license](https://img.shields.io/badge/license-Academic%20Free%20License%20v3.0-blue) ![Maker's Mark](https://img.shields.io/github/repo-size/ChrisAMK/README-Generator?style=plastic)
 
-Functioning login using MongoDB, Express, React, and Node.js.
+## Deployed Site
+Github Link : https://github.com/ChrisAMK/Google-React-Search
 
-Also uses:
-Next.js, Mongoose, Passport.js, Material-UI, bcrypt
+Deployed Site Link: https://serene-island-82709.herokuapp.com/
 
-## Getting Started
+## Description 
+For this weeks homework we use all our knowledge as full stack web developers to create a MERN Stack (MongoDB, Express, React and Node.js) application that uses the Google Books api to search for books. the main goal of this web application is to be able to search for a book that is in googles search index, be presented with simplified information on that book and be given the ability to save the book. the user can then also go into the saved page and be presented with the same information but on only the book the user saved. the user can click the link button to view the official google books page or press the delete button once they are done with said book. the Application is hosted on Heroku and uses a mongoDB Atlast online database
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+## Table of Contents 
+* [Installation](#Installation)
+* [Usage](#Usage)
+* [License](#License)
+* [Contributions](#Contributions)
+* [Tests and Examples](#Tests)
+* [Questions](#Questions)
 
-### Prerequisites
+## Installation <a name='Installation'></a> 
+There are no installion instructions required, just click the deployment links
 
-What things you need to install the software and how to install them
+## Usage <a name='Usage'></a> 
+Google Books is intended for users to search their favourite books be able to visit the books google books link, users can also save books for later
 
-* [Node.js](https://nodejs.org/en/)
+## License <a name='License'></a> 
+Academic Free License v3.0
 
-### Installing
+[Click Here to go to License Site!](https://opensource.org/licenses/AFL-3.0)
 
-A step by step series of examples that tell you how to get a development env running
+## Tests and Examples <a name='Tests'></a> 
+Click in the input field, type a book and press the search button. When you find a book you like, you can click the View button to visit that books page, or press save to save the book to the saved page. In the saved page you can again view the book's webpage or click delete to remove the book
 
-Install dependencies
+## Questions <a name='Questions'></a> 
+If there are any questions feel free to reach me at [Github](https://github.com/ChrisAMK)
 
-```
-npm install
-```
+or E-mail me at chriskl@live.com
 
-Start the server
-```
-npm run dev
-```
+![screenshot](client/public/screen1.jpg)
 
-### Google Registration
-
-Head to http://localhost:3000/login/
-
-### Normal Registration without Google
-
-Head to http://localhost:3000/register/
-
-### Check Login Status
-1. Open Web Inspector
-2. Open Application tab
-3. Copy the value of 'jwt' under 'Cookies' section
-4. Go to https://jwt.io/, go to Debugger and paste the 'jwt' value from step 3.
-
-## To Do
-1. Better front end template for boilerplate use
-2. Explanation of acquiring MongoDB Atlas
-3. Explanation of acquiring Google OAuth 2.0 Client ID
-
-
-## Built With
-
-* [Next.js](https://nextjs.org/) - React framework
-* [Express](https://expressjs.com/) - Node.js web framework
-* [MongoDB](https://www.mongodb.com/) - Document-based database
-* [Passport.js](http://www.passportjs.org/) - Authentication middleware
-* [Material-UI](https://material-ui.com/) - Material Design components for React
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
-## Authors
-
-* **Mathew Deal** - *Initial work* - [@saltyshu](https://twitter.com/saltyshu)
-
-See also the list of [contributors](https://github.com/datmeal/mern-login/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* **Jon Preece** - *tutorial* - [Build an authentication system using Node.js, Express, and Passport.js](https://developerhandbook.com/passport.js/node-express-passport-authentication-mini-series/)
+![screenshot](client/public/screen2.jpg)

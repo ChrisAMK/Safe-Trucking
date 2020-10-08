@@ -1,0 +1,89 @@
+* {
+    font-family: "arial"
+}
+
+#alert {
+    display: none;
+}
+
+.searchBox {
+    margin-bottom: 30px;
+    background-color: lightgray;
+    border-radius: 5px;
+    border-style: solid;
+    text-align: center;
+}
+
+.savedBox {
+    background-color: gold;
+    padding-bottom: 20px;
+    border-radius: 5px;
+    border-style: solid;
+}
+
+.bannerBox {
+    margin-bottom: 30px;
+    background-color: lightgray;
+    text-align: center;
+    border-radius: 5px;
+    font-family: 'Overpass', sans-serif;
+    padding-top: 10px; padding-bottom: 10px;
+    border-style: solid;
+}
+
+.resultCardBox {
+    background-color: white;
+    border: black;
+    border-style: solid;
+    width: 100%;
+    margin-bottom: 10px;
+    border-style: solid;
+}
+
+input {
+    width: 100%;
+}
+
+.bookSearch {
+    margin-top: 10px;
+}
+
+.resultsBox {
+    background-color: gold;
+    border-radius: 5px;
+    border-style: solid;
+    padding: 10px;
+}
+
+.viewBtn, .saveBtn {
+    float: right;
+    margin-top: 10px;
+    margin-right: 10px;
+    border-radius: 3px;
+    background-color: rgb(255, 105, 105);
+}
+
+.cardTitle, .cardSum, .results, .savedBooks {
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.cardImage {
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.nav-item {
+    padding: 20px;
+}
+
+.navbar {
+    background-color: gold;
+    margin-bottom: 30px;
+}
+
+.noMatch {
+    text-align: center;
+}

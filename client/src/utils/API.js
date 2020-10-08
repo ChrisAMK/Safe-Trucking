@@ -7,11 +7,12 @@ export default {
     },
 
     // Function that sends a post request to the server to sign up a user
-    UserSignUp: (email, password) => {
-        console.log("PoST " + email+ password )
+    UserSignUp: (email, password, isManager) => {
+        console.log("PoST " + email+ password + isManager )
         return axios.post("/api/signup", {
             email: email,
-            password: password
+            password: password,
+            isManager: isManager
         })
             .then(() => {
                 window.location.replace("/members");

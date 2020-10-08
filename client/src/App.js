@@ -4,8 +4,10 @@ import "./App.css";
 import Navigation from "./components/Navigation";
 import NoMatch from "./pages/NoMatch";
 import Home from "./pages/Home";
-import Signup from "./pages/Signup";
-import Signin from "./pages/Signin";
+import Signup from "./components/Signup";
+import Signin from "./components/Signin";
+import Manager from "./pages/Manager";
+import Driver from "./pages/Driver";
 
 
 function App() {
@@ -20,6 +22,14 @@ function App() {
 
             <Route exact path="/">
               <Home />
+            </Route>
+
+            <Route exact path="/driver">
+              <Driver />
+            </Route>
+
+            <Route exact path="/manager">
+              <Manager />
             </Route>
 
             <Route exact path="/signup">

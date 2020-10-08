@@ -21,14 +21,16 @@ module.exports = function(server) {
     console.log("SIGN UP")
     db.User.create({
       email: req.body.email,
-      password: req.body.password
+      password: req.body.password,
+      isManager: req.body.isManager
     })
       .then(() => {
         res.redirect(307, "/api/login");
       })
       .catch(err => {
         // If validation Fails
-        res.status(401).json(err);
+        console.log(err)
+        // res.status(401).json(err);
       });
   });
 

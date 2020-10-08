@@ -1,8 +1,11 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
+// import Manager from "../pages/Manager";
 import API from "../utils/API";
 
 
 function Signup() {
+
+    const [ isManager, setIsManager ] = useState(false);
 
     const emailRef = useRef("");
     const passwordRef = useRef("");
@@ -10,6 +13,7 @@ function Signup() {
     const submitHandler = (event) => {
 
         event.preventDefault();
+
         const userData = {
             email: emailRef.current.value,
             password: passwordRef.current.value
@@ -19,17 +23,22 @@ function Signup() {
             return;
         }
 
-        signUpUser(userData.email, userData.password);
+        signUpUser(userData.email, userData.password, isManager);
         emailRef.current.value = "";
         passwordRef.current.value = "";
     };
 
-    const signUpUser = (email, password) => {
-        API.UserSignUp(email, password)
+    const signUpUser = (email, password, isManager) => {
+        API.UserSignUp(email, password, isManager)
         .then(result => console.log(result))
         .catch(error => console.log(error));
     }
 
+
+    const isManagerCheck = () => {
+        (isManager === false) ? setIsManager(true) : setIsManager(false)
+        console.log(isManager);
+    }
     return(
         
         <div className="container">
@@ -45,6 +54,12 @@ function Signup() {
                     <div className="form-group">
                         <label htmlFor="exampleInputPassword1">Password</label>
                         <input type="password" className="form-control" id="password-input" placeholder="Password" ref={passwordRef}></input>
+                    </div>
+                    <div className="form-group">
+                    <input className="form-check-input" type="checkbox" onClick={isManagerCheck}></input>
+                    <label className="form-check-label" htmlFor="defaultCheck1">
+                        Are you a manager
+                    </label>
                     </div>
                     <div id="alert" className="alert alert-danger" role="alert">
                         <span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>

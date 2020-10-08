@@ -6,74 +6,24 @@
     display: none;
 }
 
-.searchBox {
-    margin-bottom: 30px;
-    background-color: lightgray;
-    border-radius: 5px;
-    border-style: solid;
+.managerIntro {
+    background-color: red;
     text-align: center;
 }
 
-.savedBox {
-    background-color: gold;
-    padding-bottom: 20px;
-    border-radius: 5px;
-    border-style: solid;
-}
-
-.bannerBox {
-    margin-bottom: 30px;
-    background-color: lightgray;
+.driverIntro {
+    background-color: green;
     text-align: center;
-    border-radius: 5px;
-    font-family: 'Overpass', sans-serif;
-    padding-top: 10px; padding-bottom: 10px;
-    border-style: solid;
 }
 
-.resultCardBox {
-    background-color: white;
-    border: black;
-    border-style: solid;
-    width: 100%;
-    margin-bottom: 10px;
-    border-style: solid;
+.driverBody {
+    text-align: center;
 }
 
-input {
-    width: 100%;
+.introduction {
+    text-align: center;
 }
 
-.bookSearch {
-    margin-top: 10px;
-}
-
-.resultsBox {
-    background-color: gold;
-    border-radius: 5px;
-    border-style: solid;
-    padding: 10px;
-}
-
-.viewBtn, .saveBtn {
-    float: right;
-    margin-top: 10px;
-    margin-right: 10px;
-    border-radius: 3px;
-    background-color: rgb(255, 105, 105);
-}
-
-.cardTitle, .cardSum, .results, .savedBooks {
-    margin-left: 10px;
-    margin-top: 10px;
-}
-
-.cardImage {
-    margin-left: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    width: 100%;
-}
 
 .nav-item {
     padding: 20px;

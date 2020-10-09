@@ -33,7 +33,7 @@ function Signin() {
         <div className="container">
             <div className="row">
                 <div className="col-4"></div>
-                <div className="col-4 searchBox">
+                <div className="col-4 loginForm">
                     <h2>Login Form</h2>
                     <form className="login">
                 <div className="form-group">

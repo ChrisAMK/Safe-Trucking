@@ -44,7 +44,7 @@ function Signup() {
         <div className="container">
             <div className="row">
                 <div className="col-4"></div>
-                <div className="col-4 searchBox">
+                <div className="col-4 signupForm">
                 <h2>Sign Up Form</h2>
                 <form className="signup">
                     <div className="form-group">
@@ -55,11 +55,11 @@ function Signup() {
                         <label htmlFor="exampleInputPassword1">Password</label>
                         <input type="password" className="form-control" id="password-input" placeholder="Password" ref={passwordRef}></input>
                     </div>
-                    <div className="form-group">
-                    <input className="form-check-input" type="checkbox" onClick={isManagerCheck}></input>
-                    <label className="form-check-label" htmlFor="defaultCheck1">
-                        Are you a manager
-                    </label>
+                    <div className="form-group managerCheck">
+                        <input className="form-check-input" type="checkbox" onClick={isManagerCheck}></input>
+                        <label className="form-check-label" htmlFor="defaultCheck1">
+                            Are you a manager
+                        </label>
                     </div>
                     <div id="alert" className="alert alert-danger" role="alert">
                         <span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
@@ -68,7 +68,7 @@ function Signup() {
                     <button onClick={submitHandler} className="btn btn-default">Sign Up</button>
                 </form>
                 <br />
-                <p>Or log in <a href="/login">here</a></p>
+                <p>Or log in <a href="/signin">here</a></p>
                 </div>
             </div>
         </div>

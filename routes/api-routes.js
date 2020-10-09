@@ -1,6 +1,7 @@
 // Requiring our models and passport as we've configured it
 const db = require("../models");
 const passport = require("../config/passport");
+let user = {};
 
 module.exports = function(server) {
   // Using the passport.authenticate middleware with our local strategy.
@@ -12,13 +13,16 @@ module.exports = function(server) {
       email: req.user.email,
       id: req.user.id
     });
+
+    user = { ...req.user }
+    // console.log(req);
+    console.log(req.user.email);
   });
 
   // Route for signing up a user. The user's password is automatically hashed and stored securely thanks to
   // how we configured our Sequelize User Model. If the user is created successfully, proceed to log the user in,
   // otherwise send back an error
   server.post("/api/signup", (req, res) => {
-    console.log("SIGN UP")
     db.User.create({
       email: req.body.email,
       password: req.body.password,
@@ -36,8 +40,11 @@ module.exports = function(server) {
 
   // Route for logging user out
   server.get("/logout", (req, res) => {
+    console.log(req.user)
     req.logout();
     res.redirect("/");
+    user = {};
+    console.log(req.user)
   });
 
   // Route for getting some data about our user to be used client side
@@ -54,4 +61,14 @@ module.exports = function(server) {
       });
     }
   });
+
+  // server.get("/api/manager", (req, res) => {
+    
+  // })
+
+  server.get("/api/user", (req, res) => {
+    console.log("Getting user Info");
+    res.send(user)
+  });
+
 };

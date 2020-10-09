@@ -1,29 +1,19 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import Driver from "../components/Driver";
+import UserProvider from "../utils/UserContext";
 
-function Home() {
+function Home(props) {
+
+    const userData = useContext(UserProvider.context);
+    console.log(userData)
+
+
     return(
-        <React.Fragment>
-            <div className="row">
-                <div className="col-12">
-                <h1 className="introduction">Select which use</h1>
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-5 managerIntro">
-                    <Link to="/manager">
-                    <h1>MANAGER</h1>
-                    </Link>
-                </div>
-                <div className="col-2"></div>
-                <div className="col-5 driverIntro">
-                    <Link to="/driver">
-                    <h1>DRIVER</h1>
-                    </Link>
-                </div>
-            </div>
-        </React.Fragment>
+        <div>
+            <Driver />
+        </div>
+        
     )
 }
 
-export default Home
+export default Home;

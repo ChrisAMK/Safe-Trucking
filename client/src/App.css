@@ -6,6 +6,18 @@
     display: none;
 }
 
+.loginForm {
+    border: solid;
+}
+
+.signupForm {
+    border: solid;
+}
+
+.managerCheck {
+    text-align: center;
+}
+
 .managerIntro {
     background-color: red;
     text-align: center;

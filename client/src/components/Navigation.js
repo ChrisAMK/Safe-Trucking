@@ -12,15 +12,18 @@ function Navigation() {
       <div>
         <ul className="navbar-nav nav-links">
           <li className="nav-item">
-            <Link
-              to="/signup"
-            >
+            <Link to="/signup">
               Sign Up
             </Link>
           </li>
           <li className="nav-item">
             <Link to="/signin">
               Sign In
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/logout">
+              Log Out
             </Link>
           </li>
         </ul>

@@ -12,11 +12,12 @@ export default {
     },
 
     // Function that sends a post request to the server to sign up a user
-    UserSignUp: (email, password, isManager) => {
+    UserSignUp: (email, password, isManager, fullname) => {
         return axios.post("/api/signup", {
             email: email,
             password: password,
-            isManager: isManager
+            isManager: isManager,
+            fullname: fullname
         })
             .then(() => {
                 window.location.replace("/home");
@@ -36,4 +37,27 @@ export default {
             console.log(err)
         });
     },
+    // creates a post request with all the job information for the server to handle
+    createJob: (client, address, contactName, contactNumber, backupContactName, backupContactNumber, details, worker, deliveryDate) => {
+        return axios.post("/api/job", {
+            client: client,
+            address: address,
+            contactName: contactName,
+            contactNumber: contactNumber,
+            backupContactName: backupContactName,
+            backupContactNumber: backupContactNumber,
+            details: details,
+            worker: worker,
+            deliveryDate: deliveryDate
+        })
+        .then(result => console.log(result))
+        .catch(error => console.log(error))
+    },
+    // creates a get request to fetch all the availiable data for jobs
+    viewAllJobs: () => {
+        return axios.get("/api/job")
+        .catch(error => console.log(error))
+    }
 }
+
+

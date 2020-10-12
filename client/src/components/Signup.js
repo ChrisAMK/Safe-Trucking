@@ -1,52 +1,62 @@
+// Signup component is rendered if the user needs to create a new account
 import React, { useRef, useState } from "react";
-// import Manager from "../pages/Manager";
 import API from "../utils/API";
 
-
 function Signup() {
-
+    // setting up state on if the user wants to create a manager account
     const [ isManager, setIsManager ] = useState(false);
 
+    // setting up references to the user's input
     const emailRef = useRef("");
     const passwordRef = useRef("");
+    const nameRef = useRef("");
 
+    // When the submit button is pressed this event is triggered
     const submitHandler = (event) => {
-
+        // preventing the page from refreshing 
         event.preventDefault();
-
+        // creating a easy object to pass to the information to
         const userData = {
             email: emailRef.current.value,
-            password: passwordRef.current.value
+            password: passwordRef.current.value,
+            fullname: nameRef.current.value
         };
 
-        if (!userData.email || !userData.password) {
+        // Making sure all data is filled out
+        if (!userData.email || !userData.password || !userData.fullname) {
             return;
         }
 
-        signUpUser(userData.email, userData.password, isManager);
+        // using the userData as parameters to the signup Function and resetting the input values
+        signUpUser(userData.email, userData.password, isManager, userData.fullname);
         emailRef.current.value = "";
         passwordRef.current.value = "";
+        nameRef.current.value = "";
+
     };
 
-    const signUpUser = (email, password, isManager) => {
-        API.UserSignUp(email, password, isManager)
+    // creating a function that uses the UserSignUp API function to create a post request for the server to handle
+    const signUpUser = (email, password, isManager, fullname) => {
+        API.UserSignUp(email, password, isManager, fullname)
         .then(result => console.log(result))
         .catch(error => console.log(error));
     }
 
-
+    // setting the state of isManager to true or false for the signup function
     const isManagerCheck = () => {
         (isManager === false) ? setIsManager(true) : setIsManager(false)
-        console.log(isManager);
     }
     return(
-        
         <div className="container">
             <div className="row">
                 <div className="col-4"></div>
                 <div className="col-4 signupForm">
                 <h2>Sign Up Form</h2>
                 <form className="signup">
+                    <div className="form-group">
+                        <label htmlFor="exampleInputEmail1">Enter your Full Name</label>
+                        <input type="name" className="form-control" id="name-input" placeholder="Full Name" ref={nameRef}></input>
+                    </div>
                     <div className="form-group">
                         <label htmlFor="exampleInputEmail1">Email address</label>
                         <input type="email" className="form-control" id="email-input" placeholder="Email" ref={emailRef}></input>
@@ -68,11 +78,10 @@ function Signup() {
                     <button onClick={submitHandler} className="btn btn-default">Sign Up</button>
                 </form>
                 <br />
-                <p>Or log in <a href="/signin">here</a></p>
+                <p>Or log in <a href="/">here</a></p>
                 </div>
             </div>
         </div>
-
     )
 }
 

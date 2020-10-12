@@ -1,5 +1,6 @@
 // Requiring our models and passport as we've configured it
 const db = require("../models");
+
 const passport = require("../config/passport");
 let user = {};
 
@@ -23,10 +24,12 @@ module.exports = function(server) {
   // how we configured our Sequelize User Model. If the user is created successfully, proceed to log the user in,
   // otherwise send back an error
   server.post("/api/signup", (req, res) => {
+    console.log("Signup")
     db.User.create({
       email: req.body.email,
       password: req.body.password,
-      isManager: req.body.isManager
+      isManager: req.body.isManager,
+      fullname: req.body.fullname
     })
       .then(() => {
         res.redirect(307, "/api/login");
@@ -57,18 +60,34 @@ module.exports = function(server) {
       // Sending back a password, even a hashed password, isn't a good idea
       res.json({
         email: req.user.email,
-        id: req.user.id
+        id: req.user.id,
+        isManager: req.user.isManager,
+        fullname: req.user.fullname
       });
     }
   });
 
-  // server.get("/api/manager", (req, res) => {
-    
-  // })
+  server.post("/api/job", (req, res) => {
+    db.Job.create({
+      client: req.body.client,
+      address: req.body.address,
+      contactName: req.body.contactName,
+      contactNumber: req.body.contactNumber,
+      backupContactName: req.body.backupContactName,
+      backupContactNumber: req.body.backupContactNumber,
+      details: req.body.details,
+      worker: req.body.worker,
+      deliveryDate: req.body.deliveryDate
+    })
+      .then(() => {
+        res.send("success");
+      })
+      .catch(error => console.log(error))
+  })
 
-  server.get("/api/user", (req, res) => {
-    console.log("Getting user Info");
-    res.send(user)
-  });
-
+  server.get("/api/job", (req, res) => {
+    db.Job.findAll({})
+      .then(result => res.json(result))
+      .catch(error => console.log(error))
+  })
 };

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Driver from "../components/Driver";
 import Manager from "../components/Manager";
 import AuthError from "../components/AuthError";
@@ -13,33 +13,42 @@ function Home() {
     // Grabbing the information from the user provider context to be used for the promises
     const userData = useContext(UserProvider.context);
 
+    useEffect(() => {
+        let userPromise = new Promise((resolve, reject) => {
+            let promiseValue = userData.email;
+            if (promiseValue) {
+                resolve(true)
+            } else {
+                reject("")
+            }
+        })
+
+        let managerPromise = new Promise((resolve, reject) => {
+            let promiseValue = userData.isManager;
+            if (promiseValue === true) {
+                resolve(promiseValue)
+            } else {
+                reject("")
+            }
+        })
+
+        userPromise
+        .then(data => setIsLoggedIn(data))
+        .catch(error => console.log(error))
+
+        managerPromise
+        .then(data => setIsManager(data))
+        .catch(err => console.log(err))
+        
+    }, [userData])
+
     // Creating new Promises that check if the user is signed in, once the promise recieves the user information from the global context
     // then the promise resolves with a value of true
-    let userPromise = new Promise((resolve, reject) => {
-        let promiseValue = userData.email;
-        if (promiseValue) {
-            resolve(true)
-        } else {
-            reject("failed")
-        }
-    })
+    
 
-    let managerPromise = new Promise((resolve, reject) => {
-        let promiseValue = userData.isManager;
-        if (promiseValue === true) {
-            resolve(promiseValue)
-        } else {
-            reject("Failed")
-        }
-    })
+    
 
-    userPromise
-    .then(data => setIsLoggedIn(data))
-    .catch(error => console.log(error))
-
-    managerPromise
-    .then(data => setIsManager(data))
-    .catch(err => console.log(err))
+    
 
     let canvas = <div>I am loading</div>
 

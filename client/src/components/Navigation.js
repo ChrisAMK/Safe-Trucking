@@ -8,7 +8,9 @@ function Navigation() {
   const userData = useContext(UserProvider.context);
 
   // let firstName = userData.fullname.split(" ").splice(0)
+
   // (userData.fullname === true) ?  firstName = userData.fullname.split(" ").splice(0) :  firstName = "Did not work"
+  // console.log(firstName)
 
   // We are conditionally rendering a link to sign in or log out depending on the user's sign-in status
   // also condionally displaying the user's name in a greeting or telling the user that they are not logged in

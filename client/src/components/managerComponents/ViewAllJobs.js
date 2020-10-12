@@ -4,79 +4,31 @@ import API from "../../utils/API";
 
 function ViewAllJobs(props) {
 
-    const dummyJobList = [
-        {
-            address: "18 Ray Close",
-            contact: "0475416442",
-            worker: "Chris"
-        },
-        {
-            address: "1 William Street",
-            contact: "0475666222",
-            worker: "John"
-        },
-        {
-            address: "25 Next Street",
-            contact: "0475222444",
-            worker: "Joah"
-        }
-    ]
-
-    const [ jobList, setJobList ] = useState({});
-
-    let jobs = [];
-
-    const getJobList = async () => {
-        console.log("First Check")
-        let response = await API.viewAllJobs()
-        jobs = response.data;
-        console.log(jobs)
-        setJobList(jobs)
-        console.log(jobList)
-        return jobs
-    }  
-
-    // useEffect(() => {
-    //     // For demonstration purposes, we mock an API call.
-    //     API.getDeveloper.then((res) => {
-    //       setDeveloperState(res);
-    //       console.log("Developer State:");
-    //       console.log(developerState);
-    //     });
-    //   }, []);
-    
+    const [ jobList, setJobList ] = useState([]);
 
     useEffect(() => {
-        API.viewAllJobs().then((res) => {
-            setJobList(res.data[0]);
-            console.log(res)
-            console.log("Job list");
-            console.log(jobList)
-
-            // fetch("/api/user_data")
-            // .then(res => res.json())
-            // .then(res => setTestUser(res))
-            // .then(console.log(testUser))
-            // .catch(err => console.log(err))
-
-
-        }, [jobList])
-
-        // jobs = getJobList()
-        // console.log(jobs)
-        // fetch("/api/job")
-        //     .then(res => res.json())
-        //     .then(res => setJobList(res))
-        //     .then(console.log(jobList))
-        //     .catch(err => console.log(err))
-// eslint-disable-next-line
+        const getJobList = async () => {
+            const response = await API.viewAllJobs()
+            const jobs = response.data;
+            setJobList(jobs);
+            console.log(jobs)
+            return jobs
+        }
+        getJobList();
     }, [])
 
     const generateJobList = (job, key) => {
         return (
             <JobComponent
+                
                 address={job.address}
-                contact={job.contact}
+                backupContactName={job.backupContactName}
+                backupContactNumber={job.backupContactNumber}
+                client={job.client}
+                contactName={job.contactName}
+                contactNumber={job.contactNumber}
+                deliveryDate={job.deliveryDate}
+                details={job.details}
                 worker={job.worker}
                 key={key}
             />
@@ -90,7 +42,7 @@ function ViewAllJobs(props) {
             <button onClick={() => props.handlePageChange("")} className="backBtn">Back</button>
             
             <div>
-                {jobs.map((job, key) => (
+                {jobList.map((job, key) => (
                     generateJobList(job, key)
                 ))}
             </div>

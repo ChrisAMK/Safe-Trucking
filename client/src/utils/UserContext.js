@@ -9,7 +9,6 @@ const UserProvider = ({ children }) => {
         fetch("/api/user_data")
             .then(res => res.json())
             .then(res => setUser(res))
-            .then(console.log(user))
             .catch(err => console.log(err))
 // eslint-disable-next-line
     }, []);

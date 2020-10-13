@@ -49,6 +49,11 @@ module.exports = function(sequelize, DataTypes) {
     inProgress: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
+    },
+
+    completionDate: {
+      type: DataTypes.STRING,
+      allowNull: true
     }
 
 

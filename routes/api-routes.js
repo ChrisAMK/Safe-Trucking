@@ -1,5 +1,7 @@
 // Requiring our models and passport as we've configured it
 const db = require("../models");
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 const passport = require("../config/passport");
 let user = {};
@@ -85,9 +87,44 @@ module.exports = function(server) {
       .catch(error => console.log(error))
   })
 
-  server.get("/api/job", (req, res) => {
+  server.get("/api/jobs", (req, res) => {
     db.Job.findAll({})
       .then(result => res.json(result))
       .catch(error => console.log(error))
   })
+
+  server.get("/api/completed", (req, res) => {
+    db.Job.findAll({
+      where: {
+        completionDate: {
+          [Op.not]: null
+        }
+      }
+    })
+    .then(result => res.json(result))
+    .catch(error => console.log(error))
+  }),
+
+  server.get("/api/active", (req, res) => {
+    db.Job.findAll({
+      where: {
+        inProgress: {
+          [Op.eq]: true
+        }
+      }
+    })
+    .then(result => res.json(result))
+    .catch(error => console.log(error))
+  }),
+
+  server.get("/api/scheduled", (req, res) => {
+    db.Job.findAll({
+      where: {
+        [Op.and]: [{ inProgress: false }, { completionDate: null}]
+      }
+    })
+    .then(result => res.json(result))
+    .catch(error => console.log(error))
+  })
+
 };

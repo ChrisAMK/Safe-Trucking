@@ -46,6 +46,20 @@ body {
     transition: .5s;
 }
 
+.driverPanel {
+    background-color: #fb7d32;
+    padding: -50px;
+    text-align: center;
+    height: 250px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.driverPanel:hover {
+    background-color: #ff9152;
+    transition: .5s;
+}
+
 .topRow {
     margin-top: 40px;
 }
@@ -75,6 +89,7 @@ body {
 
 .signInStatus {
     float: right;
+    width: 45%;
 }
 
 .backBtn {
@@ -92,4 +107,41 @@ body {
 .jobCtitle {
     margin: 20px;
     text-align: center;
+}
+
+.jobTitle {
+    margin: 20px;
+}
+
+.jobBtn {
+    width: 200px;
+}
+
+.heading {
+    background-color: white;
+    border: solid;
+    border-width: 2px;
+    margin-bottom: 30px;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.jobBtnBar {
+    font-size: larger;
+}
+
+.jobCard {
+    border: solid;
+    border-width: 2px;
+    border-radius: 8px;
+    background-color: white;
+    margin-bottom: 10px;
+}
+
+.logo {
+    width: 100px;
+    top: 5px;
+    left: 46%;
+    right: 54%;
+    position: absolute;
 }

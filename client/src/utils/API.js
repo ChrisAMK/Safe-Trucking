@@ -55,7 +55,22 @@ export default {
     },
     // creates a get request to fetch all the availiable data for jobs
     viewAllJobs: () => {
-        return axios.get("/api/job")
+        return axios.get("/api/jobs")
+        .catch(error => console.log(error))
+    },
+
+    viewCompletedJobs: () => {
+        return axios.get("/api/completed")
+        .catch(error => console.log(error))
+    },
+
+    viewActiveJobs: () => {
+        return axios.get("/api/active")
+        .catch(error => console.log(error))
+    },
+
+    viewScheduledJobs: () => {
+        return axios.get("/api/scheduled")
         .catch(error => console.log(error))
     }
 }

@@ -16,11 +16,8 @@ function Navigation() {
   // also condionally displaying the user's name in a greeting or telling the user that they are not logged in
   return (
     <nav className="navbar navbar-expand-lg navbar-light">
-      <Link className="navbar-brand" to="/home">
-        Trucking Safe
-      </Link>
-      <div>
-        <ul className="navbar-nav nav-links signInStatus">
+      <div className="signInStatus">
+        <ul className="navbar-nav nav-links">
           <li className="nav-item">
             {(userData.fullname === undefined) ? "You are not Signed in" : `Welcome ${userData.fullname}`}
           </li>
@@ -40,6 +37,9 @@ function Navigation() {
         }
         </ul>
       </div>
+      <Link className="navbar-brand" to="/home">
+        <img src={require("../assets/TFlogo.png")} className="logo"></img>
+      </Link>
     </nav>
   )
 }

@@ -26,6 +26,7 @@ body {
     border-width: 2px;
     border-radius: 8px;
     background-color: white;
+    margin-top: 30px;
 }
 
 .signupForm {
@@ -61,16 +62,23 @@ body {
 }
 
 .topRow {
-    margin-top: 40px;
+    margin-top: 70px;
 }
 
-.nav-item {
-    padding: 20px;
+.nav-link {
+    font-size: 17px;
+    font-weight: bold;
+    margin-top: 10px;
 }
 
-.navbar {
+.whitebg {
+    background-color: white;
+}
+
+.navigationBar {
     background-color: gold;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
+
 }
 
 .noMatch {
@@ -80,6 +88,7 @@ body {
 .submitBtn {
     background-color: gold;
     border-radius: 5px;
+    text-align: center;
 }
 
 .logOutBtn {
@@ -139,13 +148,36 @@ body {
 }
 
 .logo {
-    width: 100px;
+
     top: 5px;
-    left: 46%;
-    right: 54%;
+    width: 100px;
     position: absolute;
+
 }
 
 .managerCheck {
     text-align: center;
+}
+
+.welcomeNav {
+    font-size: 20px;
+    padding-bottom: -20px;
+}
+
+.menuIcon {
+    width: 150px;
+}
+
+.actionTitles {
+    margin-top: 20px;
+}
+
+.jobDate {
+    float: right;
+    margin-right: 20px;
+    margin-top: 20px;
+}
+
+#map {
+    background-color: grey;
 }

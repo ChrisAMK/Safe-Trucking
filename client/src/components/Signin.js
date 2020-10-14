@@ -2,6 +2,7 @@
 // or create an account is need be
 import React, { useRef } from "react";
 import API from "../utils/API";
+// import WrappedMap from "../components/managerComponents/Map";
 
 function Signin() {
 
@@ -37,9 +38,10 @@ function Signin() {
 
     return (
         <div className="container">
+            {/* <WrappedMap googleMapURL={''}/> */}
             <div className="row">
-                <div className="col-4"></div>
-                <div className="col-4 loginForm">
+                <div className="col-1 col-md-1 col-lg-4"></div>
+                <div className="col-10 col-sm-10 col-md-10 col-lg-4 loginForm">
                     <h2>Login Form</h2>
                     <form className="login">
                 <div className="form-group">
@@ -50,11 +52,12 @@ function Signin() {
                     <label htmlFor="exampleInputPassword1">Password</label>
                     <input type="password" className="form-control" id="password-input" placeholder="Password" ref={passwordRef}></input>
                 </div>
-                <button onClick={submitHandler} className="btn btn-default submitBtn">Login</button>
+                <button onClick={submitHandler} className="submitBtn">Login</button>
                     </form>
                     <br />
                     <p>Or sign up <a href="/signup">here</a></p>
                 </div>
+                <div className="col-1 col-md-1 col-lg-4"></div>
             </div>
         </div>
     )

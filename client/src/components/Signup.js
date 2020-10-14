@@ -53,7 +53,7 @@ function Signup() {
         <div className="container">
             <div className="row">
                 <div className="col-4"></div>
-                <div className="col-4 signupForm">
+                <div className="col-4 loginForm">
                 <h2>Sign Up Form</h2>
                 <form className="signup">
                     <div className="form-group">
@@ -82,7 +82,7 @@ function Signup() {
                         <span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                         <span className="sr-only">Error:</span> <span className="msg"></span>
                     </div>
-                    <button onClick={submitHandler} className="btn btn-default">Sign Up</button>
+                    <button onClick={submitHandler} className="submitBtn">Sign Up</button>
                 </form>
                 <br />
                 <p>Or log in <a href="/">here</a></p>

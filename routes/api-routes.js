@@ -66,6 +66,11 @@ module.exports = function(server) {
         id: req.user.id,
         isManager: req.user.isManager,
         firstname: req.user.firstname,
+        lastname: req.user.lastname,
+        address: req.user.address,
+        phonenumber: req.user.phonenumber,
+        assignedJob: req.user.assignedJob,
+        completedJobs: req.user.completedJobs
 
       });
     }

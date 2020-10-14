@@ -9,7 +9,8 @@ function Signup() {
     // setting up references to the user's input
     const emailRef = useRef("");
     const passwordRef = useRef("");
-    const nameRef = useRef("");
+    const firstNameRef = useRef("");
+    const lastNameRef = useRef("")
 
     // When the submit button is pressed this event is triggered
     const submitHandler = (event) => {
@@ -17,27 +18,29 @@ function Signup() {
         event.preventDefault();
         // creating a easy object to pass to the information to
         const userData = {
-            email: emailRef.current.value,
-            password: passwordRef.current.value,
-            fullname: nameRef.current.value
+            email: emailRef.current.value.trim(),
+            password: passwordRef.current.value.trim(),
+            firstname: firstNameRef.current.value.trim(),
+            lastname: lastNameRef.current.value.trim()
         };
 
         // Making sure all data is filled out
-        if (!userData.email || !userData.password || !userData.fullname) {
+        if (!userData.email || !userData.password || !userData.firstname || !userData.lastname) {
             return;
         }
 
         // using the userData as parameters to the signup Function and resetting the input values
-        signUpUser(userData.email, userData.password, isManager, userData.fullname);
+        signUpUser(userData.email, userData.password, isManager, userData.firstname, userData.lastname);
         emailRef.current.value = "";
         passwordRef.current.value = "";
-        nameRef.current.value = "";
+        firstNameRef.current.value = "";
+        lastNameRef.current.value = "";
 
     };
 
     // creating a function that uses the UserSignUp API function to create a post request for the server to handle
-    const signUpUser = (email, password, isManager, fullname) => {
-        API.UserSignUp(email, password, isManager, fullname)
+    const signUpUser = (email, password, isManager, firstname, lastname) => {
+        API.UserSignUp(email, password, isManager, firstname, lastname)
         .then(result => console.log(result))
         .catch(error => console.log(error));
     }
@@ -54,8 +57,12 @@ function Signup() {
                 <h2>Sign Up Form</h2>
                 <form className="signup">
                     <div className="form-group">
-                        <label htmlFor="exampleInputEmail1">Enter your Full Name</label>
-                        <input type="name" className="form-control" id="name-input" placeholder="Full Name" ref={nameRef}></input>
+                        <label htmlFor="exampleInputEmail1">Enter your First Name</label>
+                        <input type="name" className="form-control" id="name-input" placeholder="First Name" ref={firstNameRef}></input>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="exampleInputEmail1">Enter your Last Name</label>
+                        <input type="name" className="form-control" id="name-input" placeholder="Last Name" ref={lastNameRef}></input>
                     </div>
                     <div className="form-group">
                         <label htmlFor="exampleInputEmail1">Email address</label>

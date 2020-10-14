@@ -38,7 +38,7 @@ function Navigation() {
         </ul>
       </div>
       <Link className="navbar-brand" to="/home">
-        <img src={require("../assets/TFlogo.png")} className="logo"></img>
+        <img src={require("../assets/TFlogo.png")} className="logo" alt="logo"></img>
       </Link>
     </nav>
   )

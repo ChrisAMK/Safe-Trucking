@@ -31,7 +31,8 @@ module.exports = function(server) {
       email: req.body.email,
       password: req.body.password,
       isManager: req.body.isManager,
-      fullname: req.body.fullname
+      firstname: req.body.firstname,
+      lastname: req.body.lastname
     })
       .then(() => {
         res.redirect(307, "/api/login");
@@ -64,7 +65,8 @@ module.exports = function(server) {
         email: req.user.email,
         id: req.user.id,
         isManager: req.user.isManager,
-        fullname: req.user.fullname
+        firstname: req.user.firstname,
+
       });
     }
   });

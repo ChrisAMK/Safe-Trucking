@@ -23,10 +23,42 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
     },
 
-    fullname: {
+    firstname: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+
+    lastname: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+
+    address: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+
+    phonenumber: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: "0400333222"
+    },
+
+    assignedJob: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+
+    completedJobs: {
+      type: DataTypes.TEXT,
+      get: function() {
+        return JSON.parse(this.getDataValue("completedJobs"));
+      },
+      set: function(value) {
+        return this.setDataValue("completedJobs", JSON.stringify(value))
+      }
     }
+
   });
 
   // Creating a custom method for our User model. This will check if an unhashed password entered by the user can be compared to the hashed password stored in our database

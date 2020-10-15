@@ -21,7 +21,7 @@ function Navigation() {
       <div className="collapse navbar-collapse" id="navbarResponsive">
         <ul className="navbar-nav ml-auto">
           <li>
-            {(userData.firstname === undefined) ? <p className="nav-link">You are not Signed in</p> : <p className="nav-link">Welcome {userData.firstname}</p>}
+            {(userData.firstname === undefined) ? <p className="nav-link">You are not Signed in</p> : <Link to="/account"><p className="nav-link">Welcome {userData.firstname}</p></Link>}
             </li>
             {(userData.firstname === undefined) ? 
             <li>

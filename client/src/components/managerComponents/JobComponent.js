@@ -1,4 +1,5 @@
 import React from "react";
+import MapWrapped from "./MapWrapped";
 
 function JobComponent(props) {
 
@@ -31,10 +32,14 @@ function JobComponent(props) {
                             <hr></hr>
                         </div>
                     </div>
-                    {/* <div className="col-12 col-sm-12 col-md-6 col-lg-6" id="map">
-                    
-                    
-                    </div> */}
+                    <div className="col-12 col-sm-12 col-md-6 col-lg-6">
+                    <MapWrapped
+                        googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyC1c5k-YqgX3czTiqcqUzY5O6GkfUUjmwM`}
+                        loadingElement={<div style={{ height: `100%` }} />}
+                        containerElement={<div style={{ height: `100%` }} />}
+                        mapElement={<div style={{ height: `100%` }} />}
+                        />
+                    </div>
                 </div>
             </div>
         </div>

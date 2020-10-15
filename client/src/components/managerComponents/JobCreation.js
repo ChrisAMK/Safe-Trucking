@@ -46,41 +46,41 @@ function JobCreation(props) {
                         <div className="row">
                             <div className="col-6">
                                 <div className="form-group">
-                                    <label htmlFor="exampleInputEmail1">Client/Job Name</label>
+                                    <label>Client/Job Name</label>
                                     <input type="text" className="form-control" placeholder="Enter an Client/Job Name" ref={clientRef}></input>
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="exampleInputEmail1">Delivery Address</label>
+                                    <label>Delivery Address</label>
                                     <input type="text" className="form-control" placeholder="Enter an Address" ref={addressRef}></input>
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="exampleInputPassword1">Site Contact Name</label>
+                                    <label>Site Contact Name</label>
                                     <input type="text" className="form-control" placeholder="Enter Contact Name" ref={contactNameRef}></input>
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="exampleInputPassword1">Site Contact Number</label>
+                                    <label>Site Contact Number</label>
                                     <input type="text" className="form-control" placeholder="Enter Contact Number" ref={contactNumberRef}></input>
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="exampleInputEmail1">Who do you want to assign this job to?</label>
+                                    <label>Who do you want to assign this job to?</label>
                                     <input type="text" className="form-control" placeholder="Enter a workers name" ref={workerRef}></input>
                                 </div>
                             </div>
                             <div className="col-6">
                                 <div className="form-group">
-                                    <label htmlFor="exampleInputEmail1">Estimated Delivery Date</label>
+                                    <label>Estimated Delivery Date</label>
                                     <input type="date" className="form-control" placeholder="Please enter a rough time and date" ref={deliveryDateRef}></input>
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="exampleInputPassword1">Back up Contact</label>
+                                    <label>Back up Contact</label>
                                     <input type="text" className="form-control" placeholder="Enter a Back up Contact Name" ref={backupContactNameRef}></input>
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="exampleInputEmail1">Back up Contact Number</label>
+                                    <label>Back up Contact Number</label>
                                     <input type="text" className="form-control" placeholder="Enter a Back up contact Number" ref={backupContactNumberRef}></input>
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="exampleInputEmail1">Job Details</label>
+                                    <label>Job Details</label>
                                     <textarea type="text" className="form-control" placeholder="Enter any needed information including Exact time" ref={detailsRef}></textarea>
                                 </div>
                             </div>

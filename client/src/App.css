@@ -178,6 +178,10 @@ body {
     margin-top: 20px;
 }
 
-#map {
-    background-color: grey;
+.updates {
+    list-style: none;
+}
+
+.updates li {
+    display: inline;
 }

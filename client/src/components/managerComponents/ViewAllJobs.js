@@ -34,7 +34,6 @@ function ViewAllJobs(props) {
     useEffect(() => {
         const getJobList = async () => {
             const response = await API.viewAllJobs()
-            console.log("HOOK", response)
             const jobs = response.data;
             setJobList(jobs);
         }
@@ -53,7 +52,10 @@ function ViewAllJobs(props) {
                 deliveryDate={job.deliveryDate}
                 details={job.details}
                 worker={job.worker}
+                lat={job.lat}
+                lng={job.lng}
                 key={key}
+                
             />
         )
     }

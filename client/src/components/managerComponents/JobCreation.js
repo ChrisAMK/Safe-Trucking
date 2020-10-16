@@ -1,10 +1,12 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import API from "../../utils/API";
+// import Search from "./jobSearch";
+import JobAutoComplete from "./JobAutoComplete";
 
 function JobCreation(props) {
 
     const clientRef = useRef("");
-    const addressRef = useRef("");
+    // const addressRef = useRef("");
     const contactNameRef = useRef("");
     const contactNumberRef = useRef("");
     const backupContactNameRef = useRef("");
@@ -12,19 +14,46 @@ function JobCreation(props) {
     const detailsRef = useRef("");
     const workerRef = useRef("");
     const deliveryDateRef = useRef("");
+    const [ latRef, setLatRef ] = useState("")
+    const [ lngRef, setLngRef ] = useState("")
+    const [ address, setAddress ] = useState("")
 
-    const postJob = (client, address, contactName, contactNumber, backupContactName, backupContactNumber, details, worker, deliveryDate) => {
-        console.log(deliveryDate)
-        API.createJob(client, address, contactName, contactNumber, backupContactName, backupContactNumber, details, worker, deliveryDate)
+    const setGeoLocation = (lat, lng) => {
+        setLatRef(lat);
+        setLngRef(lng);
+    }
+
+    const setFilledAddress = (address) => {
+        setAddress(address)
+    }
+
+    const getUserList = async () => {
+        let employeeList = [];
+        const users = await API.getUserList()
+        await console.log(users)
+        await users.data.forEach(name => {
+            employeeList.push(name)
+        });
+        await console.log("Employees", employeeList);
+        
+    }
+
+    useEffect(() => {
+        console.log(latRef)
+        console.log(address)
+        getUserList()
+    }, [latRef, lngRef, address])
+
+    const postJob = (client, address, contactName, contactNumber, backupContactName, backupContactNumber, details, worker, deliveryDate, lat, lng) => {
+        API.createJob(client, address, contactName, contactNumber, backupContactName, backupContactNumber, details, worker, deliveryDate, lat, lng)
         .then(result => console.log(result))
         .catch(error => console.log(error))
     }
 
     const submitHandler = (event) => {
         event.preventDefault();
-        postJob(clientRef.current.value, addressRef.current.value, contactNameRef.current.value, contactNumberRef.current.value, backupContactNameRef.current.value, backupContactNumberRef.current.value, detailsRef.current.value, workerRef.current.value, deliveryDateRef.current.value);
+        postJob(clientRef.current.value, address, contactNameRef.current.value, contactNumberRef.current.value, backupContactNameRef.current.value, backupContactNumberRef.current.value, detailsRef.current.value, workerRef.current.value, deliveryDateRef.current.value, latRef, lngRef);
         clientRef.current.value = "";
-        addressRef.current.value = "";
         contactNameRef.current.value = "";
         contactNumberRef.current.value = "";
         backupContactNameRef.current.value = "";
@@ -37,7 +66,6 @@ function JobCreation(props) {
     return(
         <React.Fragment>
             <button onClick={() => props.handlePageChange("")} className="backBtn">Back</button>
-
             <div className="row">
                 <div className="col-12 loginForm">
                     <h2 className="jobCtitle">Job Creation Sheet</h2>
@@ -51,7 +79,7 @@ function JobCreation(props) {
                                 </div>
                                 <div className="form-group">
                                     <label>Delivery Address</label>
-                                    <input type="text" className="form-control" placeholder="Enter an Address" ref={addressRef}></input>
+                                    <JobAutoComplete setGeoLocation={setGeoLocation} setFilledAddress={setFilledAddress}/>
                                 </div>
                                 <div className="form-group">
                                     <label>Site Contact Name</label>

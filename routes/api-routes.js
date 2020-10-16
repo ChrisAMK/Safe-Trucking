@@ -76,7 +76,12 @@ module.exports = function(server) {
     }
   });
 
+  server.put("/api/user_data", (req, res) => {
+    console.log(req)
+  })
+
   server.post("/api/job", (req, res) => {
+    console.log(req.body)
     db.Job.create({
       client: req.body.client,
       address: req.body.address,
@@ -86,7 +91,9 @@ module.exports = function(server) {
       backupContactNumber: req.body.backupContactNumber,
       details: req.body.details,
       worker: req.body.worker,
-      deliveryDate: req.body.deliveryDate
+      deliveryDate: req.body.deliveryDate,
+      lat: req.body.lat,
+      lng: req.body.lng
     })
       .then(() => {
         res.send("success");
@@ -132,6 +139,12 @@ module.exports = function(server) {
     })
     .then(result => res.json(result))
     .catch(error => console.log(error))
+  }),
+
+  server.get("/api/users", (req, res) => {
+    db.User.findAll({})
+      .then(result => res.json(result))
+      .catch(error => console.log(error))
   })
 
 };

@@ -1,4 +1,5 @@
 import React from "react";
+import "@reach/combobox/styles.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import Navigation from "./components/Navigation";
@@ -42,7 +43,6 @@ function App() {
                 <Logout />
               </Route>
 
-            
             </Switch>
           </div>
         

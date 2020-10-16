@@ -34,10 +34,12 @@ function JobComponent(props) {
                     </div>
                     <div className="col-12 col-sm-12 col-md-6 col-lg-6">
                     <MapWrapped
-                        googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyC1c5k-YqgX3czTiqcqUzY5O6GkfUUjmwM`}
+                        googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=` + process.env.REACT_APP_GoogleAPIKey}
                         loadingElement={<div style={{ height: `100%` }} />}
                         containerElement={<div style={{ height: `100%` }} />}
                         mapElement={<div style={{ height: `100%` }} />}
+                        area={{ lat: props.lat,
+                               lng: props.lng  }}
                         />
                     </div>
                 </div>

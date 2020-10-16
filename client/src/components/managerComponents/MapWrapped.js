@@ -2,17 +2,30 @@ import React from "react";
 import {
   withGoogleMap,
   withScriptjs,
-  GoogleMap
+  GoogleMap,
+  Marker
 } from "react-google-maps";
 
 
-function Map() {
+function Map(props) {
+
+
+  console.log(props)
+  
+
+  // (props.area === undefined) ? { lat: -32.221512, lng: 116.008072 } : { lat: props.area.lat, lng: props.area.long }
+  // defaultCenter={(props.area === undefined) ? { lat: -32.221512, lng: 116.008072 } : { lat: props.area.lat, lng: props.area.long }}
 
   return (
     <GoogleMap
       defaultZoom={10}
-      defaultCenter={{ lat: 45.4211, lng: -75.6903 }}
+      defaultCenter={{ lat: props.area.lat, lng: props.area.lng }}
     >
+
+      <Marker 
+      position={{ lat: props.area.lat, lng: props.area.lng}}
+      />
+      
     </GoogleMap>
   );
 }

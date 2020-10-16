@@ -39,3 +39,6 @@ db.sequelize.sync().then(() => {
     console.log(`🌎 ==> API server now on port ${PORT}!`);
   });
 });
+
+//They say as a teacher you only remember your best or your worst students, im happy to have earnt my place after the
+//node_modules hack and slash / server package.json npm getaway fiasco. thanks 

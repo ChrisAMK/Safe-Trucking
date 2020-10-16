@@ -185,3 +185,22 @@ body {
 .updates li {
     display: inline;
 }
+
+.editInfo {
+    background-color: red;
+    width: 100%;
+    height: 100px;
+}
+
+.updateBtn {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.autocomplete {
+    width: 100%;
+}
+
+[data-reach-combobox-input] {
+    width: 100%
+  }

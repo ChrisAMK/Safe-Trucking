@@ -39,7 +39,7 @@ export default {
         });
     },
     // creates a post request with all the job information for the server to handle
-    createJob: (client, address, contactName, contactNumber, backupContactName, backupContactNumber, details, worker, deliveryDate) => {
+    createJob: (client, address, contactName, contactNumber, backupContactName, backupContactNumber, details, worker, deliveryDate, lat, lng) => {
         return axios.post("/api/job", {
             client: client,
             address: address,
@@ -49,7 +49,9 @@ export default {
             backupContactNumber: backupContactNumber,
             details: details,
             worker: worker,
-            deliveryDate: deliveryDate
+            deliveryDate: deliveryDate,
+            lat: lat,
+            lng: lng
         })
         .then(result => console.log(result))
         .catch(error => console.log(error))
@@ -72,6 +74,21 @@ export default {
 
     viewScheduledJobs: () => {
         return axios.get("/api/scheduled")
+        .catch(error => console.log(error))
+    },
+
+    updateProfile: (firstname, lastname, dob) => {
+        return axios.put("/api/user_data", {
+            firstname: firstname,
+            lastname: lastname,
+            dob: dob,
+        })
+        .then(result => console.log(result))
+        .catch(error => console.log(error))
+    },
+
+    getUserList: () => {
+        return axios.get("/api/users")
         .catch(error => console.log(error))
     }
 }

@@ -36,9 +36,9 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
 
-    worker: {
-      type: DataTypes.STRING,
-      allowNull: false,
+    worker_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
     },
 
     deliveryDate: {
@@ -54,6 +54,16 @@ module.exports = function(sequelize, DataTypes) {
     completionDate: {
       type: DataTypes.STRING,
       allowNull: true
+    },
+
+    lat: {
+      type: DataTypes.REAL,
+      allowNull: false
+    },
+
+    lng: {
+      type: DataTypes.REAL,
+      allowNull: false
     }
 
 

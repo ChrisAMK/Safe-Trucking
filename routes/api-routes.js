@@ -70,15 +70,13 @@ module.exports = function(server) {
         address: req.user.address,
         phonenumber: req.user.phonenumber,
         assignedJob: req.user.assignedJob,
-        completedJobs: req.user.completedJobs
+        completedJobs: req.user.completedJobs,
+        dob: req.user.dob,
+        gender: req.user.gender
 
       });
     }
   });
-
-  server.put("/api/user_data", (req, res) => {
-    console.log(req)
-  })
 
   server.post("/api/job", (req, res) => {
     console.log(req.body)
@@ -90,7 +88,7 @@ module.exports = function(server) {
       backupContactName: req.body.backupContactName,
       backupContactNumber: req.body.backupContactNumber,
       details: req.body.details,
-      worker: req.body.worker,
+      worker_id: req.body.worker_id,
       deliveryDate: req.body.deliveryDate,
       lat: req.body.lat,
       lng: req.body.lng
@@ -100,6 +98,40 @@ module.exports = function(server) {
       })
       .catch(error => console.log(error))
   })
+
+  server.put("/api/userprofile", (req, res) => {
+    console.log("HEY", req.body)
+    db.User.update({
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      dob: req.body.dob,
+      gender: req.body.gender
+    }, {
+      where: {
+        id: req.body.id
+      }
+    }).then(result => console.log(result))
+      .catch(error => console.log("DB ERROR", error))
+  })
+
+  server.put("/api/usercontact", (req, res) => {
+    console.log("HEY", req.body)
+    db.User.update({
+      id: req.body.id,
+      address: req.body.address,
+      email: req.body.email,
+      phonenumber: req.body.phonenumber
+    }, {
+      where: {
+        id: req.body.id
+      }
+    }).then(result => console.log(result))
+      .catch(error => console.log("DB ERROR", error))
+  })
+
+
+
+  //// JOB ROUTES
 
   server.get("/api/jobs", (req, res) => {
     db.Job.findAll({})
@@ -145,6 +177,16 @@ module.exports = function(server) {
     db.User.findAll({})
       .then(result => res.json(result))
       .catch(error => console.log(error))
+  }),
+
+  server.post("/api/workerid", (req, res) => {
+    db.User.findAll({
+      where: {
+        firstname: req.body.firstname
+      }
+    })
+    .then(result => res.json(result))
+    .catch(error => console.log(error))
   })
 
 };

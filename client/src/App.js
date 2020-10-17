@@ -9,6 +9,8 @@ import Home from "./pages/Home";
 import Logout from "./pages/logout";
 import Account from "./pages/Account";
 import UserProvider from "./utils/UserContext";
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 
 
 function App() {
@@ -18,35 +20,37 @@ function App() {
 
     <React.Fragment>
       <UserProvider>
-        <Router>
-          <Navigation />
-          <div className="container">
-            <Switch>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <Router>
+            <Navigation />
+            <div className="container">
+              <Switch>
 
-              <Route exact path="/">
-                <Signin />
-              </Route>
+                <Route exact path="/">
+                  <Signin />
+                </Route>
 
-              <Route exact path="/signup" >
-                <Signup />
-              </Route>
+                <Route exact path="/signup" >
+                  <Signup />
+                </Route>
 
-              <Route exact path="/home" >
-                <Home />
-              </Route>
+                <Route exact path="/home" >
+                  <Home />
+                </Route>
 
-              <Route exact path="/account">
-                <Account />
-              </Route>
+                <Route exact path="/account">
+                  <Account />
+                </Route>
 
-              <Route exact path="/logout" >
-                <Logout />
-              </Route>
+                <Route exact path="/logout" >
+                  <Logout />
+                </Route>
 
-            </Switch>
-          </div>
-        
-        </Router>
+              </Switch>
+            </div>
+          
+          </Router>
+        </MuiPickersUtilsProvider>
       </UserProvider>
     </React.Fragment>
   );

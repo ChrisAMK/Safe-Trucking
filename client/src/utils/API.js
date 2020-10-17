@@ -40,6 +40,7 @@ export default {
     },
     // creates a post request with all the job information for the server to handle
     createJob: (client, address, contactName, contactNumber, backupContactName, backupContactNumber, details, worker, deliveryDate, lat, lng) => {
+        
         return axios.post("/api/job", {
             client: client,
             address: address,
@@ -48,7 +49,7 @@ export default {
             backupContactName: backupContactName,
             backupContactNumber: backupContactNumber,
             details: details,
-            worker: worker,
+            worker_id: worker,
             deliveryDate: deliveryDate,
             lat: lat,
             lng: lng
@@ -77,11 +78,25 @@ export default {
         .catch(error => console.log(error))
     },
 
-    updateProfile: (firstname, lastname, dob) => {
-        return axios.put("/api/user_data", {
+    updateProfile: (id, firstname, lastname, dob, gender) => {
+        console.log("API: ",id, firstname, lastname, dob, gender)
+        return axios.put("/api/userprofile", {
+            id: id,
             firstname: firstname,
             lastname: lastname,
             dob: dob,
+            gender: gender
+        })
+        .then(result => console.log(result))
+        .catch(error => console.log(error))
+    },
+
+    updateContact: (id, address, email, phonenumber) => {
+        return axios.put("/api/usercontact", {
+            id: id,
+            address: address,
+            email: email,
+            phonenumber: phonenumber
         })
         .then(result => console.log(result))
         .catch(error => console.log(error))
@@ -89,6 +104,14 @@ export default {
 
     getUserList: () => {
         return axios.get("/api/users")
+        .catch(error => console.log(error))
+    },
+
+    getWorkerID: (firstname, lastname) => {
+        return axios.post("/api/workerid", {
+            firstname: firstname,
+            lastname: lastname
+        })
         .catch(error => console.log(error))
     }
 }

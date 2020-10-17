@@ -44,20 +44,30 @@ module.exports = function(sequelize, DataTypes) {
       defaultValue: "0400333222"
     },
 
+    dob: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+
+    gender: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+
     assignedJob: {
       type: DataTypes.STRING,
       allowNull: true
     },
 
-    completedJobs: {
-      type: DataTypes.TEXT,
-      get: function() {
-        return JSON.parse(this.getDataValue("completedJobs"));
-      },
-      set: function(value) {
-        return this.setDataValue("completedJobs", JSON.stringify(value))
-      }
-    }
+    // completedJobs: {
+    //   type: DataTypes.TEXT,
+    //   get: function() {
+    //     return JSON.parse(this.getDataValue("completedJobs"));
+    //   },
+    //   set: function(value) {
+    //     return this.setDataValue("completedJobs", JSON.stringify(value))
+    //   }
+    // }
 
   });
 

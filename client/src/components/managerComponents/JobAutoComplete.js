@@ -45,13 +45,13 @@ function Search(props) {
               value={value}
               onChange={handleInput}
               disabled={!ready}
-              placeholder="Search your location"
+              placeholder="Enter Address"
               
             />
             <ComboboxPopover>
               <ComboboxList>
                 {status === "OK" &&
-                  data.map(({ id, description, key }) => (
+                  data.map(({ id, description }) => (
                     <ComboboxOption key={id} value={description} />
                   ))}
               </ComboboxList>

@@ -2,6 +2,7 @@
 import React, {useContext} from "react";
 import { Link } from "react-router-dom";
 import UserProvider from '../utils/UserContext';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 function Navigation() {
   // Accessing the user Information to display a greeting with the user's name
@@ -21,7 +22,7 @@ function Navigation() {
       <div className="collapse navbar-collapse" id="navbarResponsive">
         <ul className="navbar-nav ml-auto">
           <li>
-            {(userData.firstname === undefined) ? <p className="nav-link">You are not Signed in</p> : <Link to="/account"><p className="nav-link">Welcome {userData.firstname}</p></Link>}
+            {(userData.firstname === undefined) ? <p className="nav-link">You are not Signed in</p> : <Link to="/account"><p className="nav-link"> {userData.firstname} <AccountCircleIcon /> </p></Link>}
             </li>
             {(userData.firstname === undefined) ? 
             <li>
@@ -32,6 +33,8 @@ function Navigation() {
               <Link to="/logout"><p className="nav-link">Log out</p></Link>
             </li>
             }
+            <li>
+            </li>
         </ul>
       </div>
     </div>

@@ -1,22 +1,62 @@
 import React, { useEffect, useRef, useState } from "react";
 import API from "../../utils/API";
-// import Search from "./jobSearch";
 import JobAutoComplete from "./JobAutoComplete";
+
+import TextField from "@material-ui/core/TextField";
+import { makeStyles } from '@material-ui/core/styles';
+import Select from '@material-ui/core/Select';
+import { KeyboardDatePicker } from '@material-ui/pickers';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      '& .MuiTextField-root': {
+        margin: theme.spacing(1),
+        width: '25ch',
+      },
+    },
+  }));
+
 
 function JobCreation(props) {
 
+    const classes = useStyles();
+
+    const [ latRef, setLatRef ] = useState("")
+    const [ lngRef, setLngRef ] = useState("")
     const clientRef = useRef("");
-    // const addressRef = useRef("");
     const contactNameRef = useRef("");
     const contactNumberRef = useRef("");
     const backupContactNameRef = useRef("");
     const backupContactNumberRef = useRef("");
     const detailsRef = useRef("");
-    const workerRef = useRef("");
-    const deliveryDateRef = useRef("");
-    const [ latRef, setLatRef ] = useState("")
-    const [ lngRef, setLngRef ] = useState("")
     const [ address, setAddress ] = useState("")
+    const [ employees, setEmployees ] = useState([])
+    const [ selectedDate, setSelectedDate] = useState(new Date('2014-08-18T21:11:54'));
+    const [ selectedWorker, setSelectedWorker ] = useState("");
+    const [ selectedWorkerID, setSelectedWorkerID ] = useState("");
+
+    const getSelectedWorkersID = async (firstname, lastname) => {
+        const worker = await API.getWorkerID(firstname, lastname)
+        setSelectedWorkerID(worker.data[0].id)
+        await console.log(worker.data[0].id)
+    }
+
+    const handleChange = (event) => {
+        setSelectedWorker(event.target.value);
+        const workerString = event.target.value;
+        const splitworker = workerString.split(' ');
+        let firstname = splitworker[0];
+        let lastname = splitworker[splitworker.length - 1];
+        getSelectedWorkersID(firstname, lastname);
+        
+    };
+    
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+      };
 
     const setGeoLocation = (lat, lng) => {
         setLatRef(lat);
@@ -27,20 +67,25 @@ function JobCreation(props) {
         setAddress(address)
     }
 
-    const getUserList = async () => {
-        let employeeList = [];
-        const users = await API.getUserList()
-        await console.log(users)
-        await users.data.forEach(name => {
-            employeeList.push(name)
-        });
-        await console.log("Employees", employeeList);
-        
-    }
-
     useEffect(() => {
-        console.log(latRef)
-        console.log(address)
+
+        const getUserList = async () => {
+            let employeeList = [];
+            const users = await API.getUserList()
+            await console.log(users)
+            await users.data.forEach(name => {
+                employeeList.push(`${name.firstname} ${name.lastname}`)
+            });
+            await setEmployees(employeeList)
+            await console.log("Employees", employeeList);
+            return employeeList;
+        }
+
+        // const getSelectedWorkersID = async (worker) => {
+        //     const workerID = await API.getWorkerID()
+        //     await console.log(workerID)
+        // }
+
         getUserList()
     }, [latRef, lngRef, address])
 
@@ -52,17 +97,17 @@ function JobCreation(props) {
 
     const submitHandler = (event) => {
         event.preventDefault();
-        postJob(clientRef.current.value, address, contactNameRef.current.value, contactNumberRef.current.value, backupContactNameRef.current.value, backupContactNumberRef.current.value, detailsRef.current.value, workerRef.current.value, deliveryDateRef.current.value, latRef, lngRef);
+        postJob(clientRef.current.value, address, contactNameRef.current.value, contactNumberRef.current.value, backupContactNameRef.current.value, backupContactNumberRef.current.value, detailsRef.current.value, selectedWorkerID, selectedDate, latRef, lngRef);
         clientRef.current.value = "";
         contactNameRef.current.value = "";
         contactNumberRef.current.value = "";
         backupContactNameRef.current.value = "";
         backupContactNumberRef.current.value = "";
         detailsRef.current.value = "";
-        workerRef.current.value = "";
-        deliveryDateRef.current.value = "";
+        console.log(selectedWorkerID)
     }
 
+    
     return(
         <React.Fragment>
             <button onClick={() => props.handlePageChange("")} className="backBtn">Back</button>
@@ -72,44 +117,42 @@ function JobCreation(props) {
                     <hr></hr>
                     <form className="login">
                         <div className="row">
-                            <div className="col-6">
+                            <div className="col-12 col-sm-12 col-md-12 col-lg-6">
                                 <div className="form-group">
-                                    <label>Client/Job Name</label>
-                                    <input type="text" className="form-control" placeholder="Enter an Client/Job Name" ref={clientRef}></input>
+                                    <TextField fullWidth required inputRef={clientRef} label="Enter an Client/Job Name" width="100%"/>
                                 </div>
-                                <div className="form-group">
-                                    <label>Delivery Address</label>
+                                <div className="form-group autoSearchJob">
                                     <JobAutoComplete setGeoLocation={setGeoLocation} setFilledAddress={setFilledAddress}/>
                                 </div>
                                 <div className="form-group">
-                                    <label>Site Contact Name</label>
-                                    <input type="text" className="form-control" placeholder="Enter Contact Name" ref={contactNameRef}></input>
+                                    <TextField fullWidth required inputRef={contactNameRef} label="Enter Contact Name" width="100%"/>
                                 </div>
                                 <div className="form-group">
-                                    <label>Site Contact Number</label>
-                                    <input type="text" className="form-control" placeholder="Enter Contact Number" ref={contactNumberRef}></input>
+                                    <TextField fullWidth required inputRef={contactNumberRef} label="Enter Contact Number" width="100%"/>
                                 </div>
                                 <div className="form-group">
-                                    <label>Who do you want to assign this job to?</label>
-                                    <input type="text" className="form-control" placeholder="Enter a workers name" ref={workerRef}></input>
+                                    <FormControl fullWidth className={classes.formControl}>
+                                        <InputLabel fullWidth htmlFor="age-native-simple">Choose a worker for the Job</InputLabel>
+                                        <Select fullWidth value={selectedWorker} onChange={handleChange}>
+                                        {employees.map((employee) => {
+                                            return <option value={employee}>{employee}</option>
+                                        })}
+                                        </Select>
+                                    </FormControl>
                                 </div>
                             </div>
-                            <div className="col-6">
-                                <div className="form-group">
-                                    <label>Estimated Delivery Date</label>
-                                    <input type="date" className="form-control" placeholder="Please enter a rough time and date" ref={deliveryDateRef}></input>
+                            <div className="col-12 col-sm-12 col-md-12 col-lg-6">
+                                <div className="form-group" style={{width:"100%"}}>
+                                    <KeyboardDatePicker fullWidth required label="Please enter the date you want delivery" format="MM/dd/yyyy" value={selectedDate} onChange={handleDateChange} KeyboardButtonProps={{ 'aria-label': 'change date', }} />
                                 </div>
                                 <div className="form-group">
-                                    <label>Back up Contact</label>
-                                    <input type="text" className="form-control" placeholder="Enter a Back up Contact Name" ref={backupContactNameRef}></input>
+                                    <TextField fullWidth required inputRef={backupContactNameRef} label="Enter a Back up Contact Name" width="100%"/>
                                 </div>
                                 <div className="form-group">
-                                    <label>Back up Contact Number</label>
-                                    <input type="text" className="form-control" placeholder="Enter a Back up contact Number" ref={backupContactNumberRef}></input>
+                                    <TextField fullWidth required inputRef={backupContactNumberRef} label="Enter a Back up contact Number" width="100%"/>
                                 </div>
                                 <div className="form-group">
-                                    <label>Job Details</label>
-                                    <textarea type="text" className="form-control" placeholder="Enter any needed information including Exact time" ref={detailsRef}></textarea>
+                                    <TextField fullWidth label="Enter any needed information including Exact time" multiline rows={4} inputRef={detailsRef}/>
                                 </div>
                             </div>
                         </div>

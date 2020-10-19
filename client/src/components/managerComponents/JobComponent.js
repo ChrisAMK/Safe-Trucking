@@ -14,7 +14,12 @@ function JobComponent(props) {
             await setWorkerFirstName(name.data[0].firstname)
             await setWorkerLastName(name.data[0].lastname)
         }
-        getNamefromID(props.worker_id)
+        if (props.worker_id === null) {
+            return
+        } else {
+            getNamefromID(props.worker_id)
+        }
+        
     })
 
     return(
@@ -26,7 +31,7 @@ function JobComponent(props) {
                     <p>{props.deliveryDate}</p>
                 </div>
                 <h2 className="jobTitle">{props.client}</h2>    
-                <strong><p>Assigned Driver: {workerFirstName} {workerLastName}</p></strong>
+                <strong><p>Assigned Driver: {(workerFirstName) ? <p>{workerFirstName} {workerLastName}</p> : <p>Unassigned</p>} </p></strong>
                 <hr></hr>
                 <div className="row">
                     <div className="col-12 col-sm-12 col-md-6 col-lg-6">

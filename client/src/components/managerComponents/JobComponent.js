@@ -37,7 +37,7 @@ function JobComponent(props) {
                         </div>
                         <div className="form-group">
                             <strong>Site contacts:</strong>
-                        <p>First: {props.contactName} {props.contactNumber}<br></br> Back up: {props.backupContactName} {props.backupContactNumber}</p>
+                        <p>First: <a href={`tel:${props.contactNumber}`}>{props.contactName} {props.contactNumber}</a><br></br> Back up: <a href={`tel:${props.bacupContactNumber}`}>{props.backupContactName} {props.backupContactNumber}</a></p>
                             <hr></hr>
                         </div>
                         <div className="form-group">

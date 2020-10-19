@@ -21,7 +21,7 @@ function DriverJobView(props) {
                         </div>
                         <div className="form-group">
                             <strong>Site contacts:</strong>
-                        <p>First: {props.jobInfo.contactName} {props.jobInfo.contactNumber}<br></br> Back up: {props.jobInfo.backupContactName} {props.jobInfo.backupContactNumber}</p>
+                        <p>First: <a href={`tel:${props.jobInfo.contactNumber}`}>{props.jobInfo.contactName} {props.jobInfo.contactNumber}</a><br></br> Back up: <a href={`tel:${props.jobInfo.backupContactNumber}`}>{props.jobInfo.backupContactName} {props.jobInfo.backupContactNumber}</a></p>
                             <hr></hr>
                         </div>
                         <div className="form-group">

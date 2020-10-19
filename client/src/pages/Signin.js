@@ -2,6 +2,7 @@
 // or create an account is need be
 import React, { useRef } from "react";
 import API from "../utils/API";
+import TextField from "@material-ui/core/TextField";
 // import WrappedMap from "../components/managerComponents/Map";
 
 function Signin() {
@@ -45,12 +46,10 @@ function Signin() {
                     <h2>Login Form</h2>
                     <form className="login">
                 <div className="form-group">
-                    <label htmlFor="exampleInputEmail1">Email address</label>
-                    <input type="email" className="form-control" id="email-input" placeholder="Email" ref={emailRef}></input>
+                    <TextField fullWidth required inputRef={emailRef} label="Enter Email" width="100%"/>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="exampleInputPassword1">Password</label>
-                    <input type="password" className="form-control" id="password-input" placeholder="Password" ref={passwordRef}></input>
+                    <TextField type="password" fullWidth required inputRef={passwordRef} label="Enter Password" width="100%"/>
                 </div>
                 <button onClick={submitHandler} className="submitBtn">Login</button>
                     </form>

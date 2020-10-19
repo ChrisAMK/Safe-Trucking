@@ -57,6 +57,7 @@ const updateContactInfo = async (id, address, email, phonenumber) => {
 }
 
 const handlePersonSubmit = () => {
+    console.log(genderRef.current.value)
     updateProfileInfo(userData.id ,firstNameRef.current.value, lastNameRef.current.value, dobRef.current.value, genderRef.current.value)
 }
 
@@ -92,7 +93,7 @@ useEffect(() => {
                         <TextField required inputRef={dobRef} id="date" label="Birthday" type="date" defaultValue={userData.dob} className={classes.textField} InputLabelProps={{ shrink: true, }}/>
                         </div>
                         <div className="col-6">
-                            <Select required labelId="demo-simple-select-label" style={{height:50, width:"100%"}} placeholder={userData.gender} inputRef={genderRef} defaultValue={userData.gender} value={userData.gender}>
+                            <Select required labelId="demo-simple-select-label" style={{height:50, width:"100%"}} inputRef={genderRef} defaultValue={userData.gender}>
                                 <MenuItem value={"Male"}>Male</MenuItem>
                                 <MenuItem value={"Female"}>Female</MenuItem>
                                 <MenuItem value={"Unspecified"}>Unspecified</MenuItem>

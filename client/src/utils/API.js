@@ -57,6 +57,14 @@ export default {
         .then(result => console.log(result))
         .catch(error => console.log(error))
     },
+
+    updateAssignedJobID: (jobCount, worker_id) => {
+        return axios.put("/api/assignedJob" , {
+            jobCount: jobCount,
+            worker_id: worker_id
+        })
+    },
+
     // creates a get request to fetch all the availiable data for jobs
     viewAllJobs: () => {
         return axios.get("/api/jobs")
@@ -75,6 +83,14 @@ export default {
 
     viewScheduledJobs: () => {
         return axios.get("/api/scheduled")
+        .catch(error => console.log(error))
+    },
+
+    viewJobByID: (id) => {
+        console.log("API SHEET", id)
+        return axios.post("/api/jobByID", {
+            id: id
+        })
         .catch(error => console.log(error))
     },
 
@@ -111,6 +127,23 @@ export default {
         return axios.post("/api/workerid", {
             firstname: firstname,
             lastname: lastname
+        })
+        .catch(error => console.log(error))
+    },
+
+    getNamefromID: (id) => {
+        console.log(id, "API FUNCTION")
+        return axios.post("/api/workername", {
+            id: id
+        })
+        .catch(error => console.log(error))
+    },
+
+    pingLocation: (id, userLat, userLng) => {
+        return axios.put("/api/location", {
+            id: id,
+            userLat: userLat,
+            userLng: userLng
         })
         .catch(error => console.log(error))
     }

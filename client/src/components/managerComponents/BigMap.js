@@ -23,6 +23,6 @@ function Map(props) {
   );
 }
 
-const MapWrapped = withScriptjs(withGoogleMap(Map));
+const BigMap = withScriptjs(withGoogleMap(Map));
 
-export default MapWrapped;
+export default BigMap;

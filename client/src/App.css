@@ -23,7 +23,7 @@ body {
     background-color: white;
     text-align: center;
     border-style: solid;
-    border-width: 2px;
+    border-width: 1px;
     padding: 10px;
     border-radius: 10px;
     margin-top: 100px;
@@ -85,7 +85,7 @@ body {
 
 .navigationBar {
     background-color: gold;
-    margin-bottom: 40px;
+    margin-bottom: 100px;
 }
 
 .noMatch {
@@ -138,7 +138,7 @@ body {
 .heading {
     background-color: white;
     border: solid;
-    border-width: 2px;
+    border-width: 1px;
     margin-bottom: 30px;
     text-align: center;
     border-radius: 8px;
@@ -158,14 +158,14 @@ body {
 
 .jobCard {
     border: solid;
-    border-width: 2px;
+    border-width: 1px;
     border-radius: 8px;
     background-color: white;
     margin-bottom: 10px;
 }
 
 .updateCards {
-    border-width: 2px;
+    border-width: 1px;
     border-radius: 10px;
     background-color: white;
     margin-bottom: 10px;
@@ -207,3 +207,16 @@ body {
 [data-reach-combobox-input] {
     width: 100%
   }
+
+.controls {
+    text-align: center;
+    background-color: white;
+    border-radius: 8px;
+    border: solid;
+    border-width: 1px;
+    margin-bottom: 20px;
+}
+
+.driverMap {
+    height: 500px;
+}

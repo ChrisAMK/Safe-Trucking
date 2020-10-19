@@ -55,9 +55,19 @@ module.exports = function(sequelize, DataTypes) {
     },
 
     assignedJob: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: true
     },
+
+    userLat: {
+      type: DataTypes.REAL,
+      allowNull: true
+    },
+
+    userLng: {
+      type: DataTypes.REAL,
+      allowNull: true
+    }
 
     // completedJobs: {
     //   type: DataTypes.TEXT,

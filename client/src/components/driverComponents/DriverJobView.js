@@ -1,48 +1,32 @@
-import React, { useEffect, useState } from "react";
-import MapWrapped from "./MapWrapped";
-import API from "../../utils/API";
+import React from 'react';
+import MapWrapped from "../managerComponents/MapWrapped";
 
-
-function JobComponent(props) {
-
-    const [ workerFirstName, setWorkerFirstName ] = useState("");
-    const [ workerLastName, setWorkerLastName ] = useState("");
-
-    useEffect(() => {
-        const getNamefromID = async (worker_id) => {
-            const name = await API.getNamefromID(worker_id)
-            await setWorkerFirstName(name.data[0].firstname)
-            await setWorkerLastName(name.data[0].lastname)
-        }
-        getNamefromID(props.worker_id)
-    })
+function DriverJobView(props) {
 
     return(
-
         <div className="row">
             <div className="col-12 jobCard">
                 <div className="jobDate">
                     <strong>Delivery Date:</strong>
-                    <p>{props.deliveryDate}</p>
+                    <p>{props.jobInfo.deliveryDate}</p>
                 </div>
-                <h2 className="jobTitle">{props.client}</h2>    
-                <strong><p>Assigned Driver: {workerFirstName} {workerLastName}</p></strong>
+                <h2 className="jobTitle">{props.jobInfo.client}</h2>
                 <hr></hr>
                 <div className="row">
                     <div className="col-12 col-sm-12 col-md-6 col-lg-6">
                         <div className="form-group">
                             <strong>Delivery Address:</strong>
-                            <p>{props.address}</p>
+                            <p>{props.jobInfo.address}</p>
                             <hr></hr>
                         </div>
                         <div className="form-group">
                             <strong>Site contacts:</strong>
-                        <p>First: {props.contactName} {props.contactNumber}<br></br> Back up: {props.backupContactName} {props.backupContactNumber}</p>
+                        <p>First: {props.jobInfo.contactName} {props.jobInfo.contactNumber}<br></br> Back up: {props.jobInfo.backupContactName} {props.jobInfo.backupContactNumber}</p>
                             <hr></hr>
                         </div>
                         <div className="form-group">
                             <strong>Job Details: </strong>
-                            <p>{props.details}</p>
+                            <p>{props.jobInfo.details}</p>
                             <hr></hr>
                         </div>
                     </div>
@@ -52,8 +36,8 @@ function JobComponent(props) {
                         loadingElement={<div style={{ height: `100%` }} />}
                         containerElement={<div style={{ height: `100%` }} />}
                         mapElement={<div style={{ height: `100%` }} />}
-                        area={{ lat: props.lat,
-                               lng: props.lng  }}
+                        area={{ lat: props.jobInfo.lat,
+                               lng: props.jobInfo.lng  }}
                         />
                     </div>
                 </div>
@@ -62,4 +46,4 @@ function JobComponent(props) {
     )
 }
 
-export default JobComponent
+export default DriverJobView

@@ -51,7 +51,7 @@ function ViewAllJobs(props) {
                 contactNumber={job.contactNumber}
                 deliveryDate={job.deliveryDate}
                 details={job.details}
-                worker={job.worker}
+                worker_id={job.worker_id}
                 lat={job.lat}
                 lng={job.lng}
                 key={key}

@@ -55,6 +55,7 @@ module.exports = function(server) {
 
   // Route for getting some data about our user to be used client side
   server.get("/api/user_data", (req, res) => {
+    console.log(req.user)
     if (!req.user) {
       // The user is not logged in, send back an empty object
       res.json({});
@@ -72,7 +73,9 @@ module.exports = function(server) {
         assignedJob: req.user.assignedJob,
         completedJobs: req.user.completedJobs,
         dob: req.user.dob,
-        gender: req.user.gender
+        gender: req.user.gender,
+        userLat: req.user.userLat,
+        userLng: req.user.userLng
 
       });
     }
@@ -80,6 +83,7 @@ module.exports = function(server) {
 
   server.post("/api/job", (req, res) => {
     console.log(req.body)
+    const newDate = req.body.deliveryDate.slice(0, 10);
     db.Job.create({
       client: req.body.client,
       address: req.body.address,
@@ -89,7 +93,7 @@ module.exports = function(server) {
       backupContactNumber: req.body.backupContactNumber,
       details: req.body.details,
       worker_id: req.body.worker_id,
-      deliveryDate: req.body.deliveryDate,
+      deliveryDate: newDate,
       lat: req.body.lat,
       lng: req.body.lng
     })
@@ -127,7 +131,19 @@ module.exports = function(server) {
       }
     }).then(result => console.log(result))
       .catch(error => console.log("DB ERROR", error))
-  })
+  }),
+
+  server.put("/api/assignedJob", (req, res) => {
+    console.log("HEY", req.body)
+    db.User.update({
+      assignedJob: req.body.jobCount
+    }, {
+      where: {
+        id: req.body.worker_id
+      }
+    }).then(result => console.log(result))
+      .catch(error => console.log("DB ERROR", error))
+  }),
 
 
 
@@ -173,6 +189,17 @@ module.exports = function(server) {
     .catch(error => console.log(error))
   }),
 
+  server.post("/api/jobByID", (req, res) => {
+    console.log("API ROUTE", req.body)
+    db.Job.findAll({
+      where: {
+        id: req.body.id
+      }
+    })
+    .then(result => res.json(result))
+    .catch(error => console.log(error))
+  }),
+
   server.get("/api/users", (req, res) => {
     db.User.findAll({})
       .then(result => res.json(result))
@@ -187,6 +214,30 @@ module.exports = function(server) {
     })
     .then(result => res.json(result))
     .catch(error => console.log(error))
+  }),
+
+  server.post("/api/workername", (req, res) => {
+    console.log("api route", req.body)
+    db.User.findAll({
+      where: {
+        id: req.body.id
+      }
+    })
+    .then(result => res.json(result))
+    .catch(error => console.log(error))
+  }),
+
+  server.put("/api/location", (req, res) => {
+    console.log("api route", req.body)
+    db.User.update({
+      userLat: req.body.userLat,
+      userLng: req.body.userLng
+    }, {
+      where: {
+        id: req.body.id
+      }
+    }).then(result => console.log(result))
+      .catch(error => console.log("DB ERROR", error))
   })
 
 };

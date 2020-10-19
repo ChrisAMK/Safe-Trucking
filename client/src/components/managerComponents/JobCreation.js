@@ -34,14 +34,14 @@ function JobCreation(props) {
     const detailsRef = useRef("");
     const [ address, setAddress ] = useState("")
     const [ employees, setEmployees ] = useState([])
-    const [ selectedDate, setSelectedDate] = useState(new Date('2014-08-18T21:11:54'));
+    const [ selectedDate, setSelectedDate] = useState(Date.now());
     const [ selectedWorker, setSelectedWorker ] = useState("");
     const [ selectedWorkerID, setSelectedWorkerID ] = useState("");
+    const [ jobCount, setJobCount ] = useState("")
 
     const getSelectedWorkersID = async (firstname, lastname) => {
         const worker = await API.getWorkerID(firstname, lastname)
         setSelectedWorkerID(worker.data[0].id)
-        await console.log(worker.data[0].id)
     }
 
     const handleChange = (event) => {
@@ -72,39 +72,43 @@ function JobCreation(props) {
         const getUserList = async () => {
             let employeeList = [];
             const users = await API.getUserList()
-            await console.log(users)
             await users.data.forEach(name => {
                 employeeList.push(`${name.firstname} ${name.lastname}`)
             });
             await setEmployees(employeeList)
-            await console.log("Employees", employeeList);
             return employeeList;
         }
 
-        // const getSelectedWorkersID = async (worker) => {
-        //     const workerID = await API.getWorkerID()
-        //     await console.log(workerID)
-        // }
+        const getLastJobID = async () => {
+            let jobs = await API.viewAllJobs()
+            await console.log(jobs.data.length + 1)
+            await setJobCount(jobs.data.length + 1)
+        }
 
+        getLastJobID()
         getUserList()
     }, [latRef, lngRef, address])
 
-    const postJob = (client, address, contactName, contactNumber, backupContactName, backupContactNumber, details, worker, deliveryDate, lat, lng) => {
-        API.createJob(client, address, contactName, contactNumber, backupContactName, backupContactNumber, details, worker, deliveryDate, lat, lng)
-        .then(result => console.log(result))
-        .catch(error => console.log(error))
+    const postJob = async (client, address, contactName, contactNumber, backupContactName, backupContactNumber, details, worker, deliveryDate, lat, lng) => {
+        const postedJob = await API.createJob(client, address, contactName, contactNumber, backupContactName, backupContactNumber, details, worker, deliveryDate, lat, lng)
+        await console.log(postedJob)
+    }
+
+    const postJobID = async (jobCount, worker_id) => {
+        const postID = await API.updateAssignedJobID(jobCount, worker_id)
+        await console.log(postID)
     }
 
     const submitHandler = (event) => {
         event.preventDefault();
         postJob(clientRef.current.value, address, contactNameRef.current.value, contactNumberRef.current.value, backupContactNameRef.current.value, backupContactNumberRef.current.value, detailsRef.current.value, selectedWorkerID, selectedDate, latRef, lngRef);
+        postJobID(jobCount, selectedWorkerID)
         clientRef.current.value = "";
         contactNameRef.current.value = "";
         contactNumberRef.current.value = "";
         backupContactNameRef.current.value = "";
         backupContactNumberRef.current.value = "";
         detailsRef.current.value = "";
-        console.log(selectedWorkerID)
     }
 
     

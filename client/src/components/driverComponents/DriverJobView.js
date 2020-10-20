@@ -29,7 +29,7 @@ function DriverJobView(props) {
                         <hr></hr>
                     </div>
                 </div>
-                <div className="col-12 col-sm-12 col-md-6 col-lg-6">
+                <div className="col-12 col-sm-12 col-md-6 col-lg-6 mapDiv">
                 <MapWrapped
                     googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=` + process.env.REACT_APP_GoogleAPIKey}
                     loadingElement={<div style={{ height: `100%` }} />}

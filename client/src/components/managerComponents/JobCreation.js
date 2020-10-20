@@ -24,26 +24,26 @@ function JobCreation(props) {
 
     // Declaring State and making use of our style for Material UI
     const classes = useStyles();
-    const [ latRef, setLatRef ] = useState("")
-    const [ lngRef, setLngRef ] = useState("")
+    const [ latRef, setLatRef ] = useState("");
+    const [ lngRef, setLngRef ] = useState("");
     const clientRef = useRef("");
     const contactNameRef = useRef("");
     const contactNumberRef = useRef("");
     const backupContactNameRef = useRef("");
     const backupContactNumberRef = useRef("");
     const detailsRef = useRef("");
-    const [ address, setAddress ] = useState("")
-    const [ employees, setEmployees ] = useState([])
+    const [ address, setAddress ] = useState("");
+    const [ employees, setEmployees ] = useState([]);
     const [ selectedDate, setSelectedDate] = useState(Date.now());
     const [ selectedWorker, setSelectedWorker ] = useState("");
     const [ selectedWorkerID, setSelectedWorkerID ] = useState("");
-    const [ jobCount, setJobCount ] = useState("")
+    const [ jobCount, setJobCount ] = useState("");
 
     // Get selected workers ID gets the ID of the worker who matches the first and last name parsed in
     const getSelectedWorkersID = async (firstname, lastname) => {
-        const worker = await API.getWorkerID(firstname, lastname)
-        setSelectedWorkerID(worker.data[0].id)
-    }
+        const worker = await API.getWorkerID(firstname, lastname);
+        setSelectedWorkerID(worker.data[0].id);
+    };
 
     // Handle change listens for the change in the list of workers and once one is chosen we set the state and trigger the get selected worker ID Function
     const handleChange = (event) => {
@@ -58,18 +58,18 @@ function JobCreation(props) {
     // Handle date change is for the Date Picker Material UI
     const handleDateChange = (date) => {
         setSelectedDate(date);
-      };
+    };
 
     // Set Geo Location is a function that is passed in to the map component as a prop so we can trigger it with values from the map
     const setGeoLocation = (lat, lng) => {
         setLatRef(lat);
         setLngRef(lng);
-    }
+    };
 
     // Set Filled Address is a function that is passed as a prop into the map to save state of a value filled inside of the map
     const setFilledAddress = (address) => {
-        setAddress(address)
-    }
+        setAddress(address);
+    };
 
     // When the component loads we get fetch all the users from the database and push the results to an array
     useEffect(() => {
@@ -77,12 +77,12 @@ function JobCreation(props) {
         // Making an array of employees to be used in a selection list
         const getUserList = async () => {
             let employeeList = [];
-            const users = await API.getUserList()
+            const users = await API.getUserList();
             await users.data.forEach(name => {
-                employeeList.push(`${name.firstname} ${name.lastname}`)
+                employeeList.push(`${name.firstname} ${name.lastname}`);
             });
-            await setEmployees(employeeList)
-        }
+            await setEmployees(employeeList);
+        };
 
         // Counting how many jobs are in the database already so we know what id this job will become
         const getLastJobID = async () => {
@@ -97,6 +97,7 @@ function JobCreation(props) {
     // Post Job is the function that sends the form data and state data to the API function
     const postJob = async (client, address, contactName, contactNumber, backupContactName, backupContactNumber, details, worker, deliveryDate, lat, lng) => {
         const postedJob = await API.createJob(client, address, contactName, contactNumber, backupContactName, backupContactNumber, details, worker, deliveryDate, lat, lng)
+        await postJobID(jobCount, selectedWorkerID)
         await console.log(postedJob)
     }
 
@@ -110,7 +111,7 @@ function JobCreation(props) {
     const submitHandler = (event) => {
         event.preventDefault();
         postJob(clientRef.current.value, address, contactNameRef.current.value, contactNumberRef.current.value, backupContactNameRef.current.value, backupContactNumberRef.current.value, detailsRef.current.value, selectedWorkerID, selectedDate, latRef, lngRef);
-        postJobID(jobCount, selectedWorkerID)
+        // postJobID(jobCount, selectedWorkerID)
         clientRef.current.value = "";
         contactNameRef.current.value = "";
         contactNumberRef.current.value = "";
@@ -119,7 +120,6 @@ function JobCreation(props) {
         detailsRef.current.value = "";
     }
 
-    
     return(
         <React.Fragment>
             <div className="row">

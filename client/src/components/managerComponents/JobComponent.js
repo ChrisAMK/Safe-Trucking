@@ -51,15 +51,17 @@ function JobComponent(props) {
                             <hr></hr>
                         </div>
                     </div>
-                    <div className="col-12 col-sm-12 col-md-6 col-lg-6">
+                    <div className="col-12 col-sm-12 col-md-6 col-lg-6 mapDiv">
+                        <p>HEY</p>
                     <MapWrapped
                         googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=` + process.env.REACT_APP_GoogleAPIKey}
-                        loadingElement={<div style={{ height: `100%` }} />}
-                        containerElement={<div style={{ height: `100%` }} />}
-                        mapElement={<div style={{ height: `100%` }} />}
+                        loadingElement={<div className="mapDiv" style={{ height: `100%` }} />}
+                        containerElement={<div className="mapDiv" style={{ height: `100%` }} />}
+                        mapElement={<div className="mapDiv" style={{ height: `100%` }} />}
                         area={{ lat: props.lat,
                                lng: props.lng  }}
                         />
+                    <p>HEY</p>
                     </div>
                 </div>
             </div>

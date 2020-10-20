@@ -9,7 +9,7 @@ import { KeyboardDatePicker } from '@material-ui/pickers';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 
-
+// Use styles for Material UI
 const useStyles = makeStyles((theme) => ({
     root: {
       '& .MuiTextField-root': {
@@ -22,8 +22,8 @@ const useStyles = makeStyles((theme) => ({
 
 function JobCreation(props) {
 
+    // Declaring State and making use of our style for Material UI
     const classes = useStyles();
-
     const [ latRef, setLatRef ] = useState("")
     const [ lngRef, setLngRef ] = useState("")
     const clientRef = useRef("");
@@ -39,11 +39,13 @@ function JobCreation(props) {
     const [ selectedWorkerID, setSelectedWorkerID ] = useState("");
     const [ jobCount, setJobCount ] = useState("")
 
+    // Get selected workers ID gets the ID of the worker who matches the first and last name parsed in
     const getSelectedWorkersID = async (firstname, lastname) => {
         const worker = await API.getWorkerID(firstname, lastname)
         setSelectedWorkerID(worker.data[0].id)
     }
 
+    // Handle change listens for the change in the list of workers and once one is chosen we set the state and trigger the get selected worker ID Function
     const handleChange = (event) => {
         setSelectedWorker(event.target.value);
         const workerString = event.target.value;
@@ -51,24 +53,28 @@ function JobCreation(props) {
         let firstname = splitworker[0];
         let lastname = splitworker[splitworker.length - 1];
         getSelectedWorkersID(firstname, lastname);
-        
     };
     
+    // Handle date change is for the Date Picker Material UI
     const handleDateChange = (date) => {
         setSelectedDate(date);
       };
 
+    // Set Geo Location is a function that is passed in to the map component as a prop so we can trigger it with values from the map
     const setGeoLocation = (lat, lng) => {
         setLatRef(lat);
         setLngRef(lng);
     }
 
+    // Set Filled Address is a function that is passed as a prop into the map to save state of a value filled inside of the map
     const setFilledAddress = (address) => {
         setAddress(address)
     }
 
+    // When the component loads we get fetch all the users from the database and push the results to an array
     useEffect(() => {
 
+        // Making an array of employees to be used in a selection list
         const getUserList = async () => {
             let employeeList = [];
             const users = await API.getUserList()
@@ -76,12 +82,11 @@ function JobCreation(props) {
                 employeeList.push(`${name.firstname} ${name.lastname}`)
             });
             await setEmployees(employeeList)
-            return employeeList;
         }
 
+        // Counting how many jobs are in the database already so we know what id this job will become
         const getLastJobID = async () => {
             let jobs = await API.viewAllJobs()
-            await console.log(jobs.data.length + 1)
             await setJobCount(jobs.data.length + 1)
         }
 
@@ -89,16 +94,19 @@ function JobCreation(props) {
         getUserList()
     }, [latRef, lngRef, address])
 
+    // Post Job is the function that sends the form data and state data to the API function
     const postJob = async (client, address, contactName, contactNumber, backupContactName, backupContactNumber, details, worker, deliveryDate, lat, lng) => {
         const postedJob = await API.createJob(client, address, contactName, contactNumber, backupContactName, backupContactNumber, details, worker, deliveryDate, lat, lng)
         await console.log(postedJob)
     }
 
+    // postJobID assigns this new job to the chosen worker
     const postJobID = async (jobCount, worker_id) => {
         const postID = await API.updateAssignedJobID(jobCount, worker_id)
         await console.log(postID)
     }
 
+    // Submit handler is a function that is triggered when the submit button is pressed, we then invoke the post job and post job id functions and reset the value
     const submitHandler = (event) => {
         event.preventDefault();
         postJob(clientRef.current.value, address, contactNameRef.current.value, contactNumberRef.current.value, backupContactNameRef.current.value, backupContactNumberRef.current.value, detailsRef.current.value, selectedWorkerID, selectedDate, latRef, lngRef);
@@ -114,8 +122,8 @@ function JobCreation(props) {
     
     return(
         <React.Fragment>
-            <button onClick={() => props.handlePageChange("")} className="backBtn">Back</button>
             <div className="row">
+            <button onClick={() => props.handlePageChange("")} className="backBtn">Back</button>
                 <div className="col-12 loginForm">
                     <h2 className="jobCtitle">Job Creation Sheet</h2>
                     <hr></hr>

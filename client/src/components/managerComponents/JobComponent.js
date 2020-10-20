@@ -8,6 +8,7 @@ function JobComponent(props) {
     const [ workerFirstName, setWorkerFirstName ] = useState("");
     const [ workerLastName, setWorkerLastName ] = useState("");
 
+    // When the component loads and we can a user assigned to the job in the props, we get set state to a query of the names of the query
     useEffect(() => {
         const getNamefromID = async (worker_id) => {
             const name = await API.getNamefromID(worker_id)
@@ -19,7 +20,6 @@ function JobComponent(props) {
         } else {
             getNamefromID(props.worker_id)
         }
-        
     })
 
     return(

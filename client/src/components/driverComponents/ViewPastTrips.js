@@ -2,9 +2,11 @@ import React from "react";
 
 function ViewPastTrips(props) {
     return (
-        <div>
+        <div className="row">
             <button onClick={() => props.handlePageChange("")} className="backBtn">Back</button>
-            ViewPastTrips
+            <div className="col-12 heading">
+                <h1>View Past Trips</h1>
+            </div>
         </div>
     )
 }

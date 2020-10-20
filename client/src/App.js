@@ -8,10 +8,10 @@ import Signin from "./pages/Signin";
 import Home from "./pages/Home";
 import Logout from "./pages/logout";
 import Account from "./pages/Account";
+import NoMatch from "./pages/NoMatch"
 import UserProvider from "./utils/UserContext";
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-
 
 function App() {
 
@@ -44,6 +44,10 @@ function App() {
 
                 <Route exact path="/logout" >
                   <Logout />
+                </Route>
+
+                <Route>
+                  <NoMatch />
                 </Route>
 
               </Switch>

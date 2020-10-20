@@ -3,7 +3,6 @@ import UserProvider from '../utils/UserContext';
 import API from "../utils/API";
 import JobAutoComplete from "../components/managerComponents/JobAutoComplete";
 
-
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from '@material-ui/core/styles';
 import { Button } from "@material-ui/core";
@@ -18,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   }));
-
 
 function Account() {
 
@@ -37,36 +35,39 @@ const [ latRef, setLatRef ] = useState("");
 const [ lngRef, setLngRef ] = useState("");
 const [ address, setAddress ] = useState("");
 
+// Set Geo Location is a function that is passed in to the map component as a prop so we can trigger it with values from the map
 const setGeoLocation = (lat, lng) => {
     setLatRef(lat);
     setLngRef(lng);
 }
 
+// Set Filled Address is a function that is passed as a prop into the map to save state of a value filled inside of the map
 const setFilledAddress = (address) => {
     setAddress(address)
 }
 
+// UpdateProfileInfo is a function that makes a put request to update the user's profile Info
 const updateProfileInfo = async (id, firstname, lastname, dob, gender) => {
     const result = await API.updateProfile(id, firstname, lastname, dob, gender)
     await console.log(result)
 }
 
+// Update the Contact Info of the user
 const updateContactInfo = async (id, address, email, phonenumber) => {
     const result = await API.updateContact(id, address, email, phonenumber)
     await console.log(result)
 }
 
+// this is the function that handles when the submit button is pressed for the personal details
 const handlePersonSubmit = () => {
     console.log(genderRef.current.value)
     updateProfileInfo(userData.id ,firstNameRef.current.value, lastNameRef.current.value, dobRef.current.value, genderRef.current.value)
 }
 
+// Same as the function above but just for the contact details
 const handleContactSubmit = () => {
     updateContactInfo(userData.id, address, emailRef.current.value, phoneRef.current.value)
 }
-useEffect(() => {
-    console.log(userData)
-})
 
   return (
     <div className="row">
@@ -78,7 +79,7 @@ useEffect(() => {
         <div className="col-12">
             <div className="row">
                 <div className="col-12 col-sm-12 col-md-12 col-lg-4 updateCards">
-                    <h3>Profile</h3>
+                    <h3 className="updateTitle">Profile</h3>
                     <hr></hr>
                     <div className="row">
                         <div className="col-6">
@@ -107,7 +108,7 @@ useEffect(() => {
                 </div>
                 <div className="col-lg-1" />
                 <div className="col-12 col-sm-12 col-md-12 col-lg-7 updateCards">
-                    <h3>Profile</h3>
+                    <h3 className="updateTitle">Contact</h3>
                     <hr></hr>
                     <div className="row">
                         <div className="col-6">

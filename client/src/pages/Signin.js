@@ -39,24 +39,23 @@ function Signin() {
 
     return (
         <div className="container">
-            {/* <WrappedMap googleMapURL={''}/> */}
             <div className="row">
-                <div className="col-1 col-md-1 col-lg-4"></div>
-                <div className="col-10 col-sm-10 col-md-10 col-lg-4 loginForm">
-                    <h2>Login Form</h2>
+                <div className="col-1 col-md-1 col-lg-3"></div>
+                <div className="col-10 col-sm-10 col-md-10 col-lg-6 loginForm">
+                    <h2 className="loginTitle">Login Form</h2>
                     <form className="login">
                 <div className="form-group">
-                    <TextField fullWidth required inputRef={emailRef} label="Enter Email" width="100%"/>
+                    <TextField variant="outlined" fullWidth required inputRef={emailRef} label="Enter Email" width="100%"/>
                 </div>
                 <div className="form-group">
-                    <TextField type="password" fullWidth required inputRef={passwordRef} label="Enter Password" width="100%"/>
+                    <TextField variant="outlined" type="password" fullWidth required inputRef={passwordRef} label="Enter Password" width="100%"/>
                 </div>
-                <button onClick={submitHandler} className="submitBtn">Login</button>
+                <button onClick={submitHandler} className="submitBtn loginBtn">Login</button>
                     </form>
                     <br />
                     <p>Or sign up <a href="/signup">here</a></p>
                 </div>
-                <div className="col-1 col-md-1 col-lg-4"></div>
+                <div className="col-1 col-md-1 col-lg-3"></div>
             </div>
         </div>
     )

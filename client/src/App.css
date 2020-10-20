@@ -1,5 +1,5 @@
 * {
-    font-family: "arial"
+    font-family: 'Roboto', sans-serif;
 }
 
 body {
@@ -22,19 +22,23 @@ body {
 .tAlert {
     background-color: white;
     text-align: center;
-    border-style: solid;
+    border: solid;
     border-width: 1px;
-    padding: 10px;
-    border-radius: 10px;
+    border-color: blue;
+    border-radius: 8px;
     margin-top: 100px;
+    padding: 10px;
 }
 
 .loginForm {
-    /* border: solid;
-    border-width: 1px; */
+    border: solid;
+    border-width: 1px;
+    border-color: blue;
     border-radius: 8px;
     background-color: white;
     margin-top: 30px;
+    padding: 10px;
+    margin-bottom: 10px;
 }
 
 .signupForm {
@@ -94,8 +98,19 @@ body {
 
 .submitBtn {
     background-color: gold;
+    border: solid;
     border-width: 1px;
-    border-radius: 5px;
+    border-color: blue;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.loginBtn {
+    width: 100%;
+}
+
+.loginTitle {
+    margin-bottom: 30px;
     text-align: center;
 }
 
@@ -111,9 +126,10 @@ body {
 
 .backBtn {
     background-color: gold;
-    border-radius: 5px;
+    border-radius: 8px;
     margin-bottom: 20px;
     border-width: 1px;
+    width: 100px;
 }
 
 .jobForm {
@@ -139,12 +155,16 @@ body {
     background-color: white;
     border: solid;
     border-width: 1px;
+    border-color: blue;
     margin-bottom: 30px;
     text-align: center;
     border-radius: 8px;
 }
 
 .updateHeading {
+    border-style: solid;
+    border-width: 1px;
+    border-color: blue;
     background-color: white;
     margin-bottom: 30px;
     text-align: center;
@@ -158,6 +178,7 @@ body {
 
 .jobCard {
     border: solid;
+    border-color: blue;
     border-width: 1px;
     border-radius: 8px;
     background-color: white;
@@ -165,7 +186,9 @@ body {
 }
 
 .updateCards {
+    border-style: solid;
     border-width: 1px;
+    border-color: blue;
     border-radius: 10px;
     background-color: white;
     margin-bottom: 10px;
@@ -208,15 +231,13 @@ body {
     width: 100%
   }
 
-.controls {
-    text-align: center;
-    background-color: white;
-    border-radius: 8px;
-    border: solid;
-    border-width: 1px;
-    margin-bottom: 20px;
-}
-
 .driverMap {
     height: 500px;
 }
+
+.updateTitle {
+    margin-top: 10px;
+    margin-left: 10px;
+    text-align: center;
+}
+

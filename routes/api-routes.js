@@ -4,7 +4,6 @@ const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
 const passport = require("../config/passport");
-let user = {};
 
 module.exports = function(server) {
   // Using the passport.authenticate middleware with our local strategy.
@@ -16,10 +15,6 @@ module.exports = function(server) {
       email: req.user.email,
       id: req.user.id
     });
-
-    user = { ...req.user }
-    // console.log(req);
-    console.log(req.user.email);
   });
 
   // Route for signing up a user. The user's password is automatically hashed and stored securely thanks to
@@ -81,8 +76,84 @@ module.exports = function(server) {
     }
   });
 
+  // Api Route that listens for a put request to update the user's profile
+  server.put("/api/userprofile", (req, res) => {
+    console.log("HEY", req.body)
+    db.User.update({
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      dob: req.body.dob,
+      gender: req.body.gender
+    }, {
+      where: {
+        id: req.body.id
+      }
+    }).catch(error => console.log("DB ERROR", error))
+  });
+
+  // Api route that listens for a put request to update the users contact details
+  server.put("/api/usercontact", (req, res) => {
+    db.User.update({
+      id: req.body.id,
+      address: req.body.address,
+      email: req.body.email,
+      phonenumber: req.body.phonenumber
+    }, {
+      where: {
+        id: req.body.id
+      }
+    })
+      .catch(error => console.log("DB ERROR", error))
+  });
+
+  // a Get request to get all information of all users
+  server.get("/api/users", (req, res) => {
+    db.User.findAll({})
+      .then(result => res.json(result))
+      .catch(error => console.log(error))
+  });
+
+  // A post request that finds user information that matches the parsed in information
+  server.post("/api/workerid", (req, res) => {
+    db.User.findAll({
+      where: {
+        firstname: req.body.firstname
+      }
+    })
+    .then(result => res.json(result))
+    .catch(error => console.log(error))
+  });
+
+  // A post request that finds User information with the id parsed in
+  server.post("/api/workername", (req, res) => {
+    console.log("api route", req.body)
+    db.User.findAll({
+      where: {
+        id: req.body.id
+      }
+    })
+    .then(result => res.json(result))
+    .catch(error => console.log(error))
+  });
+
+  // A put request that updates the user's last known location
+  server.put("/api/location", (req, res) => {
+    console.log("api route", req.body)
+    db.User.update({
+      userLat: req.body.userLat,
+      userLng: req.body.userLng
+    }, {
+      where: {
+        id: req.body.id
+      }
+    })
+      .catch(error => console.log("DB ERROR", error))
+  });
+
+  //// JOB ROUTES
+
+  // Post request that creates a new job entry in the database
   server.post("/api/job", (req, res) => {
-    console.log(req.body)
     const newDate = req.body.deliveryDate.slice(0, 10);
     db.Job.create({
       client: req.body.client,
@@ -101,60 +172,28 @@ module.exports = function(server) {
         res.send("success");
       })
       .catch(error => console.log(error))
-  })
+  });
 
-  server.put("/api/userprofile", (req, res) => {
-    console.log("HEY", req.body)
-    db.User.update({
-      firstname: req.body.firstname,
-      lastname: req.body.lastname,
-      dob: req.body.dob,
-      gender: req.body.gender
-    }, {
-      where: {
-        id: req.body.id
-      }
-    }).then(result => console.log(result))
-      .catch(error => console.log("DB ERROR", error))
-  })
-
-  server.put("/api/usercontact", (req, res) => {
-    console.log("HEY", req.body)
-    db.User.update({
-      id: req.body.id,
-      address: req.body.address,
-      email: req.body.email,
-      phonenumber: req.body.phonenumber
-    }, {
-      where: {
-        id: req.body.id
-      }
-    }).then(result => console.log(result))
-      .catch(error => console.log("DB ERROR", error))
-  }),
-
+  // put request that updates the assigned job collumn of a driver if they are selected for a new job
   server.put("/api/assignedJob", (req, res) => {
-    console.log("HEY", req.body)
     db.User.update({
       assignedJob: req.body.jobCount
     }, {
       where: {
         id: req.body.worker_id
       }
-    }).then(result => console.log(result))
+    })
       .catch(error => console.log("DB ERROR", error))
-  }),
+  });
 
-
-
-  //// JOB ROUTES
-
+  // get request that gets all job information and sends back to the user
   server.get("/api/jobs", (req, res) => {
     db.Job.findAll({})
       .then(result => res.json(result))
       .catch(error => console.log(error))
-  })
+  });
 
+  // gets all information of completed jobs
   server.get("/api/completed", (req, res) => {
     db.Job.findAll({
       where: {
@@ -165,8 +204,9 @@ module.exports = function(server) {
     })
     .then(result => res.json(result))
     .catch(error => console.log(error))
-  }),
+  });
 
+  // Gets all information of active jobs
   server.get("/api/active", (req, res) => {
     db.Job.findAll({
       where: {
@@ -177,8 +217,9 @@ module.exports = function(server) {
     })
     .then(result => res.json(result))
     .catch(error => console.log(error))
-  }),
+  });
 
+  // Gets all information of scheduled jobs 
   server.get("/api/scheduled", (req, res) => {
     db.Job.findAll({
       where: {
@@ -187,8 +228,9 @@ module.exports = function(server) {
     })
     .then(result => res.json(result))
     .catch(error => console.log(error))
-  }),
+  });
 
+  // Get the job information of a specific job ID
   server.post("/api/jobByID", (req, res) => {
     console.log("API ROUTE", req.body)
     db.Job.findAll({
@@ -198,46 +240,6 @@ module.exports = function(server) {
     })
     .then(result => res.json(result))
     .catch(error => console.log(error))
-  }),
-
-  server.get("/api/users", (req, res) => {
-    db.User.findAll({})
-      .then(result => res.json(result))
-      .catch(error => console.log(error))
-  }),
-
-  server.post("/api/workerid", (req, res) => {
-    db.User.findAll({
-      where: {
-        firstname: req.body.firstname
-      }
-    })
-    .then(result => res.json(result))
-    .catch(error => console.log(error))
-  }),
-
-  server.post("/api/workername", (req, res) => {
-    console.log("api route", req.body)
-    db.User.findAll({
-      where: {
-        id: req.body.id
-      }
-    })
-    .then(result => res.json(result))
-    .catch(error => console.log(error))
-  }),
-
-  server.put("/api/location", (req, res) => {
-    console.log("api route", req.body)
-    db.User.update({
-      userLat: req.body.userLat,
-      userLng: req.body.userLng
-    }, {
-      where: {
-        id: req.body.id
-      }
-    }).then(result => console.log(result))
-      .catch(error => console.log("DB ERROR", error))
-  })
+  });
 
 };

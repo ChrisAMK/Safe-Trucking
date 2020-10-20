@@ -13,6 +13,7 @@ function Home() {
     // Grabbing the information from the user provider context to be used for the promises
     const userData = useContext(UserProvider.context);
 
+    // When this component is rendered we are checking if the user is a manager or a driver in promises
     useEffect(() => {
         let userPromise = new Promise((resolve, reject) => {
             let promiseValue = userData.email;
@@ -32,6 +33,7 @@ function Home() {
             }
         })
 
+        // If we are a user we set the state as authentication
         userPromise
         .then(data => setIsLoggedIn(data))
         .catch(error => console.log(error))
@@ -44,12 +46,6 @@ function Home() {
 
     // Creating new Promises that check if the user is signed in, once the promise recieves the user information from the global context
     // then the promise resolves with a value of true
-    
-
-    
-
-    
-
     let canvas = <div>I am loading</div>
 
     // Authentication if statement chooses to render either the Manager component or Driver component depending on the user's credentials

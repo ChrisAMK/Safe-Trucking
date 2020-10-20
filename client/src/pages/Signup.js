@@ -50,7 +50,6 @@ function Signup() {
         passwordRef.current.value = "";
         firstNameRef.current.value = "";
         lastNameRef.current.value = "";
-
     };
 
     // creating a function that uses the UserSignUp API function to create a post request for the server to handle
@@ -65,45 +64,27 @@ function Signup() {
         (isManager === false) ? setIsManager(true) : setIsManager(false)
     }
 
+    const useStyles = makeStyles((theme) => ({
+      paper: {
+        marginTop: theme.spacing(8),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      },
+      avatar: {
+        margin: theme.spacing(1),
+        backgroundColor: theme.palette.secondary.main,
+      },
+      form: {
+        width: '100%', // Fix IE 11 issue.
+        marginTop: theme.spacing(3),
+      },
+      submit: {
+        margin: theme.spacing(3, 0, 2),
+      },
+    }));
 
-
-    function Copyright() {
-        return (
-          <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright © '}
-            <Link color="inherit" href="https://material-ui.com/">
-              Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-          </Typography>
-        );
-      }
-      
-      const useStyles = makeStyles((theme) => ({
-        paper: {
-          marginTop: theme.spacing(8),
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        },
-        avatar: {
-          margin: theme.spacing(1),
-          backgroundColor: theme.palette.secondary.main,
-        },
-        form: {
-          width: '100%', // Fix IE 11 issue.
-          marginTop: theme.spacing(3),
-        },
-        submit: {
-          margin: theme.spacing(3, 0, 2),
-        },
-      }));
-
-      const classes = useStyles();
-
-
-
+    const classes = useStyles();
 
     return(
       <div className="loginForm">
@@ -195,9 +176,6 @@ function Signup() {
             </Grid>
           </form>
         </div>
-        <Box mt={5}>
-          <Copyright />
-        </Box>
       </Container>
     </div>
     )

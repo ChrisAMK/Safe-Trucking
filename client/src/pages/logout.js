@@ -10,19 +10,18 @@ function Logout() {
     // log out handler uses the API to log the user out when the button is pressed
     const logOutHandler = () => {
         API.userLogOut()
-            .then(result => console.log(result))
             .catch(err => console.log(err))
     }
 
     return(
         <div className="row">
-        <div className="col-2"></div>
-        <div className="col-8 tAlert">
-        <h1>Are you sure you want to log out {userData.fullname}</h1>
-            <button onClick={logOutHandler} className="submitBtn">Click to log out</button>
+            <div className="col-2"></div>
+            <div className="col-8 tAlert">
+            <h1>Are you sure you want to log out {userData.fullname}</h1>
+                <button onClick={logOutHandler} className="submitBtn">Click to log out</button>
+            </div>
+            <div className="col-2"></div>
         </div>
-        <div className="col-2"></div>
-    </ div>
     )
 }
 

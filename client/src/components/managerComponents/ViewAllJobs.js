@@ -63,9 +63,9 @@ function ViewAllJobs(props) {
     return(
 
         <React.Fragment>
+            <div className="row">
             <button onClick={() => props.handlePageChange("")} className="backBtn">Back</button>
-            <div className="row heading">
-                <div className="col-12"> 
+                <div className="col-12 heading"> 
                     <h1>View All Jobs</h1>
                     <div className="jobBtnBar">
                         <button className="backBtn jobBtn" onClick={() => getAllJobList()}>All Jobs</button>

@@ -2,10 +2,11 @@ import React from "react";
 
 function SafetyAlert(props) {
     return(
-        <div>
+        <div className="row">
             <button onClick={() => props.handlePageChange("")} className="backBtn">Back</button>
-
-            SafetyAlert
+            <div className="col-12 heading">
+                <h1>Safety Alert</h1>
+            </div>
         </div>
     )
 }

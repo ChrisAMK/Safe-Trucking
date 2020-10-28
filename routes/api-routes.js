@@ -44,8 +44,6 @@ module.exports = function(server) {
     console.log(req.user)
     req.logout();
     res.redirect("/");
-    user = {};
-    console.log(req.user)
   });
 
   // Route for getting some data about our user to be used client side
@@ -70,7 +68,9 @@ module.exports = function(server) {
         dob: req.user.dob,
         gender: req.user.gender,
         userLat: req.user.userLat,
-        userLng: req.user.userLng
+        userLng: req.user.userLng,
+        pingTime: req.user.pingTime,
+        startTime: req.user.startTime
 
       });
     }
@@ -126,7 +126,6 @@ module.exports = function(server) {
 
   // A post request that finds User information with the id parsed in
   server.post("/api/workername", (req, res) => {
-    console.log("api route", req.body)
     db.User.findAll({
       where: {
         id: req.body.id
@@ -138,10 +137,36 @@ module.exports = function(server) {
 
   // A put request that updates the user's last known location
   server.put("/api/location", (req, res) => {
-    console.log("api route", req.body)
     db.User.update({
       userLat: req.body.userLat,
-      userLng: req.body.userLng
+      userLng: req.body.userLng,
+      pingTime: req.body.pingTime
+    }, {
+      where: {
+        id: req.body.id
+      }
+    })
+      .then(result => res.json(result))
+      .catch(error => console.log("DB ERROR", error))
+  });
+
+  server.put("/api/startjob", (req, res) => {
+    db.User.update({
+      startTime: req.body.startTime,
+      userLng: req.body.userLng,
+      userLat: req.body.userLat
+    }, {
+      where: {
+        id: req.body.id
+      }
+    })
+      .catch(error => console.log("DB ERROR", error))
+  });
+
+  server.put("/api/endJob", (req, res) => {
+    db.Job.update({
+      completionDate: Date.now(),
+      inProgress: false
     }, {
       where: {
         id: req.body.id
@@ -232,7 +257,6 @@ module.exports = function(server) {
 
   // Get the job information of a specific job ID
   server.post("/api/jobByID", (req, res) => {
-    console.log("API ROUTE", req.body)
     db.Job.findAll({
       where: {
         id: req.body.id
@@ -241,5 +265,31 @@ module.exports = function(server) {
     .then(result => res.json(result))
     .catch(error => console.log(error))
   });
+
+  server.put("/api/jobToInProgress", (req, res) => {
+    db.Job.update({
+      inProgress: true
+    }, 
+      {
+        where: {
+          id: req.body.jobId
+        }
+      })
+      .then(result => res.json(result))
+      .catch(error => console.log(error));
+  })
+
+  server.put("/api/jobToOutOfProgress", (req, res) => {
+    db.Job.update({
+      inProgress: false
+    }, 
+      {
+        where: {
+          id: req.body.jobId
+        }
+      })
+      .then(result => res.json(result))
+      .catch(error => console.log(error));
+  })
 
 };

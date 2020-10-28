@@ -6,7 +6,7 @@ function DriverStats(props) {
             <div className="row">
             <button onClick={() => props.handlePageChange("")} className="backBtn">Back</button>
                 <div className="col-12 heading">
-                    <h1>View DriverStats</h1>
+                    <h1>Edit Jobs</h1>
                 </div>
             </div>
         </React.Fragment>

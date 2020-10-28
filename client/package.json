@@ -36,6 +36,7 @@
     "fontsource-roboto": "^3.0.3",
     "jquery": "^3.5.1",
     "material-ui-pickers": "^2.2.4",
+    "moment": "^2.29.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-google-maps": "^9.4.5",

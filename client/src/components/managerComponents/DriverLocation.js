@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
-import MapWrapped from "./MapWrapped";
 import API from '../../utils/API';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
+
+import { GoogleMap, useLoadScript, Marker,
+    // InfoWindow,
+  } from "@react-google-maps/api";
 
 // use style hook for Material UI
 const useStyles = makeStyles((theme) => ({
@@ -22,13 +25,14 @@ function DriverLocation(props) {
     // declaring our state and using the style declared above
     const classes = useStyles();
     const [ employees, setEmployees ] = useState([])
-    const [ selectedWorker, setSelectedWorker ] = useState("");
+    const [ worker, setWorker ] = useState("");
     const [ selectedWorkerLat, setSelectedWorkerLat ] = useState("");
     const [ selectedWorkerLng, setSelectedWorkerLng ] = useState("");
     const [ ready, setReady ] = useState(false)
 
     // Function that gets the ID of the worker that matches the first and last name and once it gets the data back we set ready to true
     const getSelectedWorkersID = async (firstname, lastname) => {
+        console.log("Checking again")
         const worker = await API.getWorkerID(firstname, lastname)
         await setSelectedWorkerLat(worker.data[0].userLat)
         await setSelectedWorkerLng(worker.data[0].userLng)
@@ -37,7 +41,7 @@ function DriverLocation(props) {
 
     // When there is change on the page in the way of a list, we have to separate the full name string and pass in the first and last name
     const handleChange = (event) => {
-        setSelectedWorker(event.target.value);
+        setWorker(event.target.value);
         const workerString = event.target.value;
         const splitworker = workerString.split(' ');
         let firstname = splitworker[0];
@@ -58,7 +62,16 @@ function DriverLocation(props) {
         }
 
         getUserList()
-    }, [])
+    }, [worker])
+
+    const libraries = ["places"];
+    const { isLoaded, loadError } = useLoadScript({
+        googleMapsApiKey: process.env.REACT_APP_GoogleAPIKey,
+        libraries,
+      });    
+    
+      if (loadError) return "Error";
+      if (!isLoaded) return "Loading...";
 
     return(
         <React.Fragment>
@@ -68,10 +81,10 @@ function DriverLocation(props) {
                     <div className="form-group">
                     <h2 style={{textAlign: "center"}}>Choose a driver to Locate</h2>
                     <FormControl fullWidth className={classes.formControl}>
-                        <InputLabel fullWidth htmlFor="age-native-simple">Choose a worker for the Job</InputLabel>
-                        <Select fullWidth value={selectedWorker} onChange={handleChange}>
-                        {employees.map((employee) => {
-                            return <option value={employee}>{employee}</option>
+                        <InputLabel htmlFor="age-native-simple">Choose a worker for the Job</InputLabel>
+                        <Select value={worker} defaultValue="Choose a Worker" onChange={handleChange}>
+                        {employees.map((employee, key) => {
+                            return <option value={employee} key={key}>{employee}</option>
                         })}
                         </Select>
                     </FormControl>
@@ -85,14 +98,13 @@ function DriverLocation(props) {
                     
 
                     {(ready === true)
-                    ? <MapWrapped
-                        googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=` + process.env.REACT_APP_GoogleAPIKey}
-                        loadingElement={<div style={{ height: `100%` }} />}
-                        containerElement={<div style={{ height: `100%` }} />}
-                        mapElement={<div style={{ height: `100%` }} />}
-                        area={{ lat: selectedWorkerLat,
-                                lng: selectedWorkerLng}}
-                        />
+                    ? <GoogleMap
+                        mapContainerStyle={{ height: "100%", width: "100%"}}
+                        zoom={8}
+                        center={{ lat: selectedWorkerLat, lng: selectedWorkerLng}}
+                        >
+                        <Marker position={{ lat: selectedWorkerLat, lng: selectedWorkerLng}} />
+                    </GoogleMap>
                     : <h6 style={{textAlign: "center"}}>Waiting on Selection...</h6>}
 
                 </div>

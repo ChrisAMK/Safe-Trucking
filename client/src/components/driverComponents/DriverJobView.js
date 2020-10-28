@@ -1,7 +1,21 @@
 import React from 'react';
-import MapWrapped from "../managerComponents/MapWrapped";
+
+
+import { GoogleMap, useLoadScript, Marker,
+    // InfoWindow,
+  } from "@react-google-maps/api";
 
 function DriverJobView(props) {
+
+    const libraries = ["places"];
+
+    const { isLoaded, loadError } = useLoadScript({
+        googleMapsApiKey: process.env.REACT_APP_GoogleAPIKey,
+        libraries,
+      });    
+    
+      if (loadError) return "Error";
+      if (!isLoaded) return "Loading...";
 
     return(
         <div className="col-12 jobCard">
@@ -30,14 +44,13 @@ function DriverJobView(props) {
                     </div>
                 </div>
                 <div className="col-12 col-sm-12 col-md-6 col-lg-6 mapDiv">
-                <MapWrapped
-                    googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=` + process.env.REACT_APP_GoogleAPIKey}
-                    loadingElement={<div style={{ height: `100%` }} />}
-                    containerElement={<div style={{ height: `100%` }} />}
-                    mapElement={<div style={{ height: `100%` }} />}
-                    area={{ lat: props.jobInfo.lat,
-                            lng: props.jobInfo.lng  }}
-                    />
+                <GoogleMap
+                    mapContainerStyle={{ height: "100%", width: "100%"}}
+                    zoom={8}
+                    center={{ lat: props.jobInfo.lat, lng: props.jobInfo.lng}}
+                    >
+                    <Marker position={{ lat: props.jobInfo.lat, lng: props.jobInfo.lng}} />
+                </GoogleMap>
                 </div>
             </div>
         </div>

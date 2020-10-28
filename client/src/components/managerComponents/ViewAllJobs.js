@@ -30,7 +30,6 @@ function ViewAllJobs(props) {
         setJobList(jobs)
     }
 
-
     useEffect(() => {
         const getJobList = async () => {
             const response = await API.viewAllJobs()

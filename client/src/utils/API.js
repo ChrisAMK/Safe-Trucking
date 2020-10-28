@@ -85,12 +85,31 @@ export default {
         .catch(error => console.log(error))
     },
 
+    startJob: (id, userLat, userLng) => {
+        console.log("Start Job")
+        return axios.put("/api/startjob", {
+            id: id,
+            startTime: Date.now(),
+            userLat: userLat,
+            userLng: userLng
+        })
+        .catch(error => console.log(error))
+    },
+
+    endJob: (id) => {
+        return axios.put("/api/endJob", {
+            id: id
+        })
+        .catch(error => console.log(error))
+    },
+
     // Performs a put request that updates the last known location of a user
     pingLocation: (id, userLat, userLng) => {
         return axios.put("/api/location", {
             id: id,
             userLat: userLat,
-            userLng: userLng
+            userLng: userLng,
+            pingTime: Date.now()
         })
         .catch(error => console.log(error))
     },
@@ -151,7 +170,21 @@ export default {
             jobCount: jobCount,
             worker_id: worker_id
         })
-    }
+    },
+
+    jobToInProgress: (jobId) => {
+        console.log("JobToInProgress")
+        return axios.put("/api/jobToInProgress", {
+            jobId: jobId
+        })
+    },
+
+    jobToOutOfProgress: (jobId) => {
+        console.log("JobToInProgress")
+        return axios.put("/api/jobToOutOfProgress", {
+            jobId: jobId
+        })
+    },
 
 }
 

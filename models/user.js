@@ -67,6 +67,16 @@ module.exports = function(sequelize, DataTypes) {
     userLng: {
       type: DataTypes.REAL,
       allowNull: true
+    },
+
+    pingTime: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+
+    startTime: {
+      type: DataTypes.STRING,
+      allowNull: true
     }
 
     // completedJobs: {

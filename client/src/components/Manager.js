@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import ManagerHome from "../components/managerComponents/ManagerHome";
 import JobCreation from "../components/managerComponents/JobCreation";
 import DriverLocation from "../components/managerComponents/DriverLocation";
-import DriverStats from "../components/managerComponents/DriverStats";
+import EditJobs from "../components/managerComponents/EditJobs";
 import ViewAllJobs from "../components/managerComponents/ViewAllJobs";
 
 function Manager() {
@@ -25,7 +25,7 @@ function Manager() {
             case "driverLoc":
                 return <DriverLocation handlePageChange={handlePageChange}/>
             case "driverStats":
-                return <DriverStats handlePageChange={handlePageChange}/>
+                return <EditJobs handlePageChange={handlePageChange}/>
             case "allJobs":
                 return <ViewAllJobs handlePageChange={handlePageChange}/>
             default:

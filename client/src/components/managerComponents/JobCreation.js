@@ -144,10 +144,10 @@ function JobCreation(props) {
                                 </div>
                                 <div className="form-group">
                                     <FormControl fullWidth className={classes.formControl}>
-                                        <InputLabel fullWidth htmlFor="age-native-simple">Choose a worker for the Job</InputLabel>
+                                        <InputLabel htmlFor="age-native-simple">Choose a worker for the Job</InputLabel>
                                         <Select fullWidth value={selectedWorker} onChange={handleChange}>
-                                        {employees.map((employee) => {
-                                            return <option value={employee}>{employee}</option>
+                                        {employees.map((employee, key) => {
+                                            return <option value={employee} key={key}>{employee}</option>
                                         })}
                                         </Select>
                                     </FormControl>

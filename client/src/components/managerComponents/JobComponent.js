@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
-import MapWrapped from "./MapWrapped";
 import API from "../../utils/API";
+
+import { GoogleMap, useLoadScript, Marker,
+  // InfoWindow,
+} from "@react-google-maps/api";
 
 
 function JobComponent(props) {
@@ -21,6 +24,16 @@ function JobComponent(props) {
             getNamefromID(props.worker_id)
         }
     })
+    
+    const libraries = ["places"];
+
+    const { isLoaded, loadError } = useLoadScript({
+        googleMapsApiKey: process.env.REACT_APP_GoogleAPIKey,
+        libraries,
+      });    
+    
+      if (loadError) return "Error";
+      if (!isLoaded) return "Loading...";
 
     return(
 
@@ -31,7 +44,7 @@ function JobComponent(props) {
                     <p>{props.deliveryDate}</p>
                 </div>
                 <h2 className="jobTitle">{props.client}</h2>    
-                <strong><p>Assigned Driver: {(workerFirstName) ? <p>{workerFirstName} {workerLastName}</p> : <p>Unassigned</p>} </p></strong>
+                <strong><p>Assigned Driver: </p>{(workerFirstName) ? <p>{workerFirstName} {workerLastName}</p> : <p>Unassigned</p>}</strong>
                 <hr></hr>
                 <div className="row">
                     <div className="col-12 col-sm-12 col-md-6 col-lg-6">
@@ -52,14 +65,13 @@ function JobComponent(props) {
                         </div>
                     </div>
                     <div className="col-12 col-sm-12 col-md-6 col-lg-6 mapDiv">
-                    <MapWrapped
-                        googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=` + process.env.REACT_APP_GoogleAPIKey}
-                        loadingElement={<div style={{ height: `100%` }} />}
-                        containerElement={<div style={{ height: `100%` }} />}
-                        mapElement={<div style={{ height: `100%` }} />}
-                        area={{ lat: props.lat,
-                                lng: props.lng  }}
-                        />
+                        <GoogleMap
+                            mapContainerStyle={{ height: "100%", width: "100%"}}
+                            zoom={8}
+                            center={{ lat: props.lat, lng: props.lng}}
+                            >
+                            <Marker position={{ lat: props.lat, lng: props.lng}} />
+                        </GoogleMap>
                     </div>
                 </div>
             </div>

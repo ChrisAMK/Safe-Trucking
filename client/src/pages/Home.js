@@ -40,7 +40,7 @@ function Home() {
 
         managerPromise
         .then(data => setIsManager(data))
-        .catch(err => console.log(err))
+        .catch(error => console.log(error))
         
     }, [userData])
 
@@ -62,7 +62,6 @@ function Home() {
         <div>
             {canvas}
         </div>
-        
     )
 }
 

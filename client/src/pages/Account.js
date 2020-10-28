@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useContext, useRef, useState} from "react";
 import UserProvider from '../utils/UserContext';
 import API from "../utils/API";
 import JobAutoComplete from "../components/managerComponents/JobAutoComplete";

@@ -39,9 +39,7 @@ function DriverLocation(props) {
 
     // Function that gets the ID of the worker that matches the first and last name and once it gets the data back we set ready to true
     const getSelectedWorkersID = async (firstname, lastname) => {
-        console.log("Checking again")
         const worker = await API.getWorkerID(firstname, lastname)
-        console.log(worker.data)
         await setStartTime(worker.data[0].startTime)
         await setPingTime(worker.data[0].pingTime)
         await setWorkerPhone(worker.data[0].phonenumber)
@@ -63,6 +61,7 @@ function DriverLocation(props) {
 
     // When there is change on the page in the way of a list, we have to separate the full name string and pass in the first and last name
     const handleChange = (event) => {
+        setBreakTime(null)
         setWorker(event.target.value);
         const workerString = event.target.value;
         const splitworker = workerString.split(' ');

@@ -98,8 +98,8 @@ function CurrentJobDetails(props) {
 
     return(
         <React.Fragment>
-            <div className="row">
             <button onClick={() => props.handlePageChange("")} className="backBtn">Back</button>
+            <div className="row">
                 {(userData.assignedJob === null) ? 
                 // if user has no job assigned the code directly underneath is render as a error message
                 <div className="row">

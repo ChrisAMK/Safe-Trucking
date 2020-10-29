@@ -11,9 +11,11 @@ function CurrentJobDetails(props) {
     const [ ready, setReady ] = useState(false);
     const [location, setLocation] = useState({});
     const [ userStart, setUserStart ] = useState("");
-    const [ breakTime, setBreakTime ] = useState("");
+    const [ breakTime, setBreakTime ] = useState(null);
     const [ latestPing, setLatestPing ] = useState("");
     const [ onJob, setOnJob ] = useState(false);
+    const [ updatedTime, setUpdatedTime ] = useState("");
+    const [ firstStart, setFirstStart ] = useState(false)
 
     // Use Context gets information about the User from the provider
     const userData = useContext(UserProvider.context);
@@ -41,21 +43,36 @@ function CurrentJobDetails(props) {
                 let goodDate = await format(valueToSubtract, "T")
                 const goodDateInt = parseInt(goodDate)
                 await setBreakTime(goodDateInt);
-                await console.log(formatDistanceToNowStrict(parseInt(breakTime), { addSuffix: true, includeSeconds: true }))
+                await setFirstStart(true);
+                
             }
             catch {
                 console.log("Loading")
             }
+            
+            if (userData.assignedJob != null) {
+                const jobDetails = await API.viewJobByID(jobId);
+                await setJobInfo(jobDetails.data[0]);
+                await setOnJob(jobDetails.data[0].inProgress)
+                await setReady(true);
+                await setFirstStart(true);
                 
-            const jobDetails = await API.viewJobByID(jobId);
-            await setJobInfo(jobDetails.data[0]);
-            await setOnJob(jobDetails.data[0].inProgress)
-            await setReady(true);
+            }
+
+        }
+       
+        getPageInfo(userData.assignedJob, userData.id)
+
+        // Tricks react into re-rendering every minute,
+        if ((userStart && breakTime) !== null) {
+            const interval = setInterval(() => {
+                setUpdatedTime(formatDistanceToNowStrict(parseInt(latestPing), { addSuffix: true, includeSeconds: true }))
+              }, 1000);
+            return () => clearInterval(interval);
         }
 
-        // setInterval(getPageInfo, 20000)
-        getPageInfo(userData.assignedJob, userData.id)
-    }, [userData.assignedJob, userData.id, userStart])
+        // Tricks react into re-rendering every minute,
+    }, [userData.assignedJob, userData.id, userStart, breakTime, firstStart, latestPing])
 
     const pingLocation = async (id, location) => {
         const userLat = location.latitude;
@@ -77,6 +94,7 @@ function CurrentJobDetails(props) {
         await API.jobToOutOfProgress(id)
         await API.endJob(id)
     }
+
 
     return(
         <React.Fragment>
@@ -103,16 +121,13 @@ function CurrentJobDetails(props) {
                             </div>
                             <div className="row">
                                 <div className="col-6 col-sm-6 col-md-4">
-                                    <h6>You started Driving:</h6>
-                                    {(userData.startTime === null) ? <p>Loading...</p> : <h3>{(formatDistanceToNowStrict(parseInt(userStart), { addSuffix: true, includeSeconds: true }))}</h3>}
+                                    {(onJob === false || userStart === null) ? <p></p> : <React.Fragment><h6>You started Driving:</h6> <h3>{(formatDistanceToNowStrict(parseInt(userStart), { addSuffix: true, includeSeconds: true }))}</h3></React.Fragment>}
                                 </div>
                                 <div className="col-6 col-sm-6 col-md-4">
-                                    <h6>You are due for a Break in :</h6>
-                                    {(userData.startTime === null) ? <p>Loading...</p> : <h3>{(formatDistanceToNowStrict(parseInt(breakTime), { addSuffix: true, includeSeconds: true }))}</h3>}
+                                    {(onJob === false || breakTime === null) ? <p>Start Job to Begin</p> : <React.Fragment><h6>You are due for a Break:</h6> <h3>{(formatDistanceToNowStrict(parseInt(breakTime), { addSuffix: true, includeSeconds: true }))}</h3></React.Fragment>}
                                 </div>
                                 <div className="col-12 col-sm-12 col-md-4">
-                                    <h6>You last pinged:</h6>
-                                    {(userData.startTime === null) ? <p>Loading...</p> : <h3>{(formatDistanceToNowStrict(parseInt(latestPing), { addSuffix: true, includeSeconds: true }))}</h3>}
+                                    {(onJob === false || latestPing === null) ? <p></p> : <React.Fragment><h6>Your latest Ping was:</h6> <h3>{(formatDistanceToNowStrict(parseInt(latestPing), { addSuffix: true, includeSeconds: true }))}</h3></React.Fragment>}
                                 </div>
                             </div>
                         </div>

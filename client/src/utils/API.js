@@ -164,11 +164,46 @@ export default {
         .catch(error => console.log(error))
     },
 
+    updateJob: (id, client, contactName, contactNumber, backupContactName, backupContactNumber, details, worker, deliveryDate) => {
+        return axios.put("/api/job", {
+            id: id,
+            client: client,
+            contactName: contactName,
+            contactNumber: contactNumber,
+            backupContactName: backupContactName,
+            backupContactNumber: backupContactNumber,
+            details: details,
+            worker_id: worker,
+            deliveryDate: deliveryDate
+        })
+        .catch(error => console.log(error))
+    },
+
+    deleteJob: (id) => {
+        console.log(id)
+        return axios.post("/api/deleteJob", {
+            id: id
+        })
+    },
+
+    deleteJobId: (id) => {
+        return axios.post("/api/deleteJobId", {
+            id: id
+        })
+    },
+
     // Performs a put request that updates a workers assigned job to the new job created
     updateAssignedJobID: (jobCount, worker_id) => {
         return axios.put("/api/assignedJob" , {
             jobCount: jobCount,
             worker_id: worker_id
+        })
+    },
+
+    updateNewDriver: (worker_id, job_id) => {
+        return axios.put("/api/newDriver" , {
+            worker_id: worker_id,
+            job_id: job_id
         })
     },
 

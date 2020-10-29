@@ -14,7 +14,7 @@ function Navigation() {
     <div className="navbar navbar-expand navigationBar navbar-light" id="navigation">
       <div className="container-fluid">
         <div className="imgWrapper">
-          <a className="navbar-brand imgWrapper" href="/home"><img src={require("../assets/TFlogo2.png")} className="logo" alt="Logo" title="Click to go to Homepage" /></a>
+          <a className="navbar-brand imgWrapper" href="/home"><img src={require("../assets/TFlogo.png")} className="logo" alt="Logo" title="Click to go to Homepage" /></a>
         </div>
         <div className="listContainer">
           <ul className="navbar-nav ml-auto">

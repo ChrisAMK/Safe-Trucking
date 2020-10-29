@@ -111,7 +111,6 @@ function JobCreation(props) {
     const submitHandler = (event) => {
         event.preventDefault();
         postJob(clientRef.current.value, address, contactNameRef.current.value, contactNumberRef.current.value, backupContactNameRef.current.value, backupContactNumberRef.current.value, detailsRef.current.value, selectedWorkerID, selectedDate, latRef, lngRef);
-        // postJobID(jobCount, selectedWorkerID)
         clientRef.current.value = "";
         contactNameRef.current.value = "";
         contactNumberRef.current.value = "";

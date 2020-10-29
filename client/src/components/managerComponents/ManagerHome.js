@@ -20,7 +20,7 @@ function ManagerHome(props) {
         <div className="row">
             <div className="col-1"></div>
             <div className="col-10 col-sm-10 col-md-10 col-lg-4 managerPanel" onClick={() => props.handlePageChange("driverStats")}>
-                <h2 className="actionTitles">View Driver Stats</h2>
+                <h2 className="actionTitles">Edit Jobs</h2>
                 <img src={require("../../assets/stats.png")} className="menuIcon" alt="icon"></img>
             </div>
             <div className="col-1"></div>

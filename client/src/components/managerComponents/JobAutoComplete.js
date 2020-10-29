@@ -38,21 +38,23 @@ function Search(props) {
         }
       };
       props.setFilledAddress(value)
+      console.log(value)
       return (
         <div className="autocomplete">
-          <Combobox onSelect={handleSelect}>
+          <Combobox onSelect={handleSelect} className="comboxboxOption">
             <ComboboxInput
               value={value}
               onChange={handleInput}
               disabled={!ready}
               placeholder="Enter Address"
               
+              
             />
-            <ComboboxPopover>
+            <ComboboxPopover className="comboxboxOption">
               <ComboboxList>
                 {status === "OK" &&
                   data.map(({ id, description }) => (
-                    <ComboboxOption key={id} value={description} />
+                    <ComboboxOption key={id} value={description}/>
                   ))}
               </ComboboxList>
             </ComboboxPopover>

@@ -199,10 +199,69 @@ module.exports = function(server) {
       .catch(error => console.log(error))
   });
 
+   // Post request that creates a new job entry in the database
+   server.put("/api/job", (req, res) => {
+    const newDate = req.body.deliveryDate.slice(0, 10);
+    db.Job.update({
+      client: req.body.client,
+      contactName: req.body.contactName,
+      contactNumber: req.body.contactNumber,
+      backupContactName: req.body.backupContactName,
+      backupContactNumber: req.body.backupContactNumber,
+      details: req.body.details,
+      worker_id: req.body.worker_id,
+      deliveryDate: newDate,
+    }, {
+      where: {
+        id: req.body.id
+      }
+    })
+      .then(() => {
+        res.send("success");
+      })
+      .catch(error => console.log(error))
+  });
+
+  // Deletes a job from the database
+  server.post("/api/deleteJob", (req, res) => {
+    db.Job.destroy({
+      where: {
+        id: req.body.id
+      }
+    })
+    .then(() => {
+      res.send("deleted");
+    })
+    .catch(error => console.log(error))
+  });
+
+  server.post("/api/deleteJobId", (req, res) => {
+    console.log("TEST THIS", req.body)
+    db.User.update({
+      assignedJob: null
+    }, {
+      where: {
+        id: req.body.id
+      }
+    })
+      .catch(error => console.log("DB Delete ERROR", error))
+  });
+
   // put request that updates the assigned job collumn of a driver if they are selected for a new job
   server.put("/api/assignedJob", (req, res) => {
     db.User.update({
       assignedJob: req.body.jobCount
+    }, {
+      where: {
+        id: req.body.worker_id
+      }
+    })
+      .catch(error => console.log("DB ERROR", error))
+  });
+
+  server.put("/api/newDriver", (req, res) => {
+    db.User.update({
+      assignedJob: req.body.job_id
     }, {
       where: {
         id: req.body.worker_id

@@ -1,6 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import EditJobComponent from "./EditJobComponent";
+import API from "../../utils/API";
 
-function DriverStats(props) {
+function EditJobs(props) {
+
+    const [ jobList, setJobList ] = useState([]);
+    
+    useEffect(() => {
+        const getJobList = async () => {
+            const response = await API.viewAllJobs()
+            const jobs = response.data;
+            setJobList(jobs)
+        }
+
+
+        getJobList();
+    },[jobList])
+
+    const generateJobList = (job, key) => {
+        return (
+            <EditJobComponent
+                id={job.id}
+                address={job.address}
+                backupContactName={job.backupContactName}
+                backupContactNumber={job.backupContactNumber}
+                client={job.client}
+                contactName={job.contactName}
+                contactNumber={job.contactNumber}
+                deliveryDate={job.deliveryDate}
+                details={job.details}
+                worker_id={job.worker_id}
+                lat={job.lat}
+                lng={job.lng}
+                key={key}
+            />
+        )
+    }
+
+
     return(
         <React.Fragment>
             <div className="row">
@@ -8,9 +45,14 @@ function DriverStats(props) {
                 <div className="col-12 heading">
                     <h1>Edit Jobs</h1>
                 </div>
+                <div className="col-12">
+                    {jobList.map((job, key) => (
+                        generateJobList(job, key)
+                    ))}
+                </div>
             </div>
         </React.Fragment>
     )
 }
 
-export default DriverStats
+export default EditJobs

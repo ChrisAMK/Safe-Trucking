@@ -43,7 +43,7 @@ function DriverLocation(props) {
         const worker = await API.getWorkerID(firstname, lastname)
         console.log(worker.data)
         await setStartTime(worker.data[0].startTime)
-        await setPingTime(worker.data[0].startTime)
+        await setPingTime(worker.data[0].pingTime)
         await setWorkerPhone(worker.data[0].phonenumber)
         await setSelectedWorkerLat(worker.data[0].userLat)
         await setSelectedWorkerLng(worker.data[0].userLng)
@@ -84,7 +84,7 @@ function DriverLocation(props) {
         }
 
         getUserList()
-    }, [worker])
+    }, [worker, breakTime, startTime, pingTime])
 
     const libraries = ["places"];
     const { isLoaded, loadError } = useLoadScript({

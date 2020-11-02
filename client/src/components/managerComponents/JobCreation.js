@@ -87,7 +87,8 @@ function JobCreation(props) {
         // Counting how many jobs are in the database already so we know what id this job will become
         const getLastJobID = async () => {
             let jobs = await API.viewAllJobs()
-            await setJobCount(jobs.data.length + 1)
+            let lastJob = [...jobs.data].pop();
+            await setJobCount(lastJob.id + 1)
         }
 
         getLastJobID()

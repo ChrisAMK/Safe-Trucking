@@ -38,7 +38,6 @@ function Search(props) {
         }
       };
       props.setFilledAddress(value)
-      console.log(value)
       return (
         <div className="autocomplete">
           <Combobox onSelect={handleSelect} className="comboxboxOption">
@@ -47,8 +46,7 @@ function Search(props) {
               onChange={handleInput}
               disabled={!ready}
               placeholder="Enter Address"
-              
-              
+              className="addressInput"
             />
             <ComboboxPopover className="comboxboxOption">
               <ComboboxList>

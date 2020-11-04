@@ -16,6 +16,7 @@ function EditJobComponent(props) {
 
     const userData = useContext(UserProvider.context);
 
+    // Modal open and close handlers
     const handleEditOpen = () => {
         setEditOpen(true);
     };
@@ -33,6 +34,10 @@ function EditJobComponent(props) {
     const [ workerLastName, setWorkerLastName ] = useState("");
     const [editOpen, setEditOpen] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);
+    const [ employees, setEmployees ] = useState([]);
+    const [ selectedWorker, setSelectedWorker ] = useState("");
+    const [ selectedWorkerID, setSelectedWorkerID ] = useState("");
+    const [ selectedDate, setSelectedDate] = useState(Date.now());
 
     const selectedWorkerRef = useRef("");
     const clientRef = useRef("");
@@ -41,10 +46,7 @@ function EditJobComponent(props) {
     const backupContactNameRef = useRef("");
     const backupContactNumberRef = useRef("");
     const detailsRef = useRef("");
-    const [ employees, setEmployees ] = useState([]);
-    const [ selectedWorker, setSelectedWorker ] = useState("");
-    const [ selectedWorkerID, setSelectedWorkerID ] = useState("");
-    const [ selectedDate, setSelectedDate] = useState(Date.now());
+
 
     // Get selected workers ID gets the ID of the worker who matches the first and last name parsed in
     const getSelectedWorkersID = async (firstname, lastname) => {
@@ -52,6 +54,7 @@ function EditJobComponent(props) {
         setSelectedWorkerID(worker.data[0].id);
     };
 
+    // Handles worker list selection
     const handleChange = (event) => {
         setSelectedWorker(event.target.value);
         const workerString = event.target.value;
@@ -113,13 +116,13 @@ function EditJobComponent(props) {
         updateJobId(selectedWorkerID, props.id)
     }
 
+    // handles delete button event
     const handleDelete = () => {
         deleteJob(props.id)
         deleteJobId(props.worker_id)
     }
 
     return(
-
         <div className="row">
             <div className="col-12 jobCard">
                 <div className="jobDate">

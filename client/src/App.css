@@ -244,6 +244,13 @@ body {
     height: 500px;
 }
 
+.addressInput {
+    margin-top: 10px;
+    border: none;
+    border-bottom: solid 1px;
+    border-color: gray;
+}
+
 .updateTitle {
     margin-top: 10px;
     margin-left: 10px;

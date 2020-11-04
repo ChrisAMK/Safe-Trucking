@@ -33,8 +33,6 @@ function DriverLocation(props) {
     const [ pingTime, setPingTime ] = useState(null);
     const [ workerPhone, setWorkerPhone ] = useState(null);
     const [ breakTime, setBreakTime ] = useState(null)
-
-
     const [ ready, setReady ] = useState(false)
 
     // Function that gets the ID of the worker that matches the first and last name and once it gets the data back we set ready to true

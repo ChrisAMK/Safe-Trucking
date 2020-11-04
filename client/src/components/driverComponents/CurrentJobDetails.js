@@ -15,7 +15,6 @@ function CurrentJobDetails(props) {
     const [ latestPing, setLatestPing ] = useState("");
     const [ onJob, setOnJob ] = useState(false);
     const [ updatedTime, setUpdatedTime ] = useState("");
-    const [ firstStart, setFirstStart ] = useState(false)
 
     // Use Context gets information about the User from the provider
     const userData = useContext(UserProvider.context);
@@ -37,33 +36,32 @@ function CurrentJobDetails(props) {
             await setUserStart(userStartTime);
             await setLatestPing(userPingTime);
 
+            // Setting The Break Times to be used as a counter
             try {
                 const userStartTimeInt = await parseInt(userStartTime)
                 const valueToSubtract = await add(userStartTimeInt, { hours: 6 })
                 let goodDate = await format(valueToSubtract, "T")
                 const goodDateInt = parseInt(goodDate)
                 await setBreakTime(goodDateInt);
-                await setFirstStart(true);
-                
             }
             catch {
                 console.log("Loading")
             }
             
+            // if the user has an assigned job, set the states accordingly
             if (userData.assignedJob != null) {
                 const jobDetails = await API.viewJobByID(jobId);
                 await setJobInfo(jobDetails.data[0]);
                 await setOnJob(jobDetails.data[0].inProgress)
                 await setReady(true);
-                await setFirstStart(true);
-                
             }
         }
-       
+        
+        // When the Component loads we fetch user data from the Context
         getPageInfo(userData.assignedJob, userData.id)
 
         // Tricks react into re-rendering every minute,
-        if ((userStart && breakTime) !== null) {
+        if ((userStart && latestPing) !== null) {
             const interval = setInterval(() => {
                 setUpdatedTime(formatDistanceToNowStrict(parseInt(latestPing), { addSuffix: true, includeSeconds: true }))
               }, 1000);
@@ -71,8 +69,9 @@ function CurrentJobDetails(props) {
         }
 
         // Tricks react into re-rendering every minute,
-    }, [userData.assignedJob, userData.id, userStart, breakTime, firstStart, latestPing])
+    }, [userData.assignedJob, userData.id, userStart, breakTime, latestPing, updatedTime])
 
+    // Ping location sends a ping to the database with the driver's current location
     const pingLocation = async (id, location) => {
         const userLat = location.latitude;
         const userLng = location.longitude;

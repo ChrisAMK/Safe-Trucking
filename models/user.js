@@ -40,8 +40,7 @@ module.exports = function(sequelize, DataTypes) {
 
     phonenumber: {
       type: DataTypes.STRING,
-      allowNull: true,
-      defaultValue: "0400333222"
+      allowNull: true
     },
 
     dob: {

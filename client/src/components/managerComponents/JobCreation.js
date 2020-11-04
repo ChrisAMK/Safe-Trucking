@@ -8,6 +8,10 @@ import Select from '@material-ui/core/Select';
 import { KeyboardDatePicker } from '@material-ui/pickers';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
+
 
 // Use styles for Material UI
 const useStyles = makeStyles((theme) => ({
@@ -24,20 +28,38 @@ function JobCreation(props) {
 
     // Declaring State and making use of our style for Material UI
     const classes = useStyles();
-    const [ latRef, setLatRef ] = useState("");
-    const [ lngRef, setLngRef ] = useState("");
     const clientRef = useRef("");
     const contactNameRef = useRef("");
     const contactNumberRef = useRef("");
     const backupContactNameRef = useRef("");
     const backupContactNumberRef = useRef("");
     const detailsRef = useRef("");
+    const [ latRef, setLatRef ] = useState("");
+    const [ lngRef, setLngRef ] = useState("");
     const [ address, setAddress ] = useState("");
     const [ employees, setEmployees ] = useState([]);
     const [ selectedDate, setSelectedDate] = useState(Date.now());
     const [ selectedWorker, setSelectedWorker ] = useState("");
     const [ selectedWorkerID, setSelectedWorkerID ] = useState("");
     const [ jobCount, setJobCount ] = useState("");
+    const [submitOpen, setSubmitOpen] = useState(false);
+    const [alertOpen, setAlertOpen] = useState(false);
+
+
+    // Submit Modal Functions
+    const handleSubmitOpen = () => {
+        setSubmitOpen(true);
+    };
+    const handleSubmitClose = () => {
+        setSubmitOpen(false);
+    };
+    const handleAlertOpen = () => {
+        setAlertOpen(true);
+    };
+    const handleAlertClose = () => {
+        setAlertOpen(false);
+    };
+    
 
     // Get selected workers ID gets the ID of the worker who matches the first and last name parsed in
     const getSelectedWorkersID = async (firstname, lastname) => {
@@ -86,39 +108,55 @@ function JobCreation(props) {
 
         // Counting how many jobs are in the database already so we know what id this job will become
         const getLastJobID = async () => {
-            let jobs = await API.viewAllJobs()
+            let jobs = await API.viewAllJobs();
             let lastJob = [...jobs.data].pop();
             (lastJob === undefined) ? await setJobCount(1) : await setJobCount(lastJob.id + 1)
-            // await setJobCount(lastJob.id + 1)
         }
 
-        getLastJobID()
-        getUserList()
+        getLastJobID();
+        getUserList();
     }, [latRef, lngRef, address])
+
 
     // Post Job is the function that sends the form data and state data to the API function
     const postJob = async (client, address, contactName, contactNumber, backupContactName, backupContactNumber, details, worker, deliveryDate, lat, lng) => {
-        const postedJob = await API.createJob(client, address, contactName, contactNumber, backupContactName, backupContactNumber, details, worker, deliveryDate, lat, lng)
-        await postJobID(jobCount, selectedWorkerID)
-        await console.log(postedJob)
+        console.log("This one",client, address, contactName, contactNumber, backupContactName, backupContactNumber, details, worker, deliveryDate, lat, lng)
+        if (client || address || contactName || contactNumber || backupContactName || backupContactNumber || details || worker || deliveryDate || lat || lng === "") {
+            console.log("EMPTY")
+            alertInvalidForm()
+        } else {
+            const postedJob = await API.createJob(client, address, contactName, contactNumber, backupContactName, backupContactNumber, details, worker, deliveryDate, lat, lng)
+            await postJobID(jobCount, selectedWorkerID)
+            await console.log(postedJob)
+            handleSubmitOpen();
+            clearFields();
+        }
+    }
+
+    // Alert Invalid form is triggered if the user doesn't complete the form
+    const alertInvalidForm = () => {
+        handleAlertOpen()
     }
 
     // postJobID assigns this new job to the chosen worker
     const postJobID = async (jobCount, worker_id) => {
-        const postID = await API.updateAssignedJobID(jobCount, worker_id)
-        await console.log(postID)
+        const postID = await API.updateAssignedJobID(jobCount, worker_id);
+        await console.log(postID);
     }
 
-    // Submit handler is a function that is triggered when the submit button is pressed, we then invoke the post job and post job id functions and reset the value
-    const submitHandler = (event) => {
-        event.preventDefault();
-        postJob(clientRef.current.value, address, contactNameRef.current.value, contactNumberRef.current.value, backupContactNameRef.current.value, backupContactNumberRef.current.value, detailsRef.current.value, selectedWorkerID, selectedDate, latRef, lngRef);
+    const clearFields = () => {
         clientRef.current.value = "";
         contactNameRef.current.value = "";
         contactNumberRef.current.value = "";
         backupContactNameRef.current.value = "";
         backupContactNumberRef.current.value = "";
         detailsRef.current.value = "";
+    }
+
+    // Submit handler is a function that is triggered when the submit button is pressed, we then invoke the post job and post job id functions and reset the value
+    const submitHandler = (event) => {
+        event.preventDefault();
+        postJob(clientRef.current.value, address, contactNameRef.current.value, contactNumberRef.current.value, backupContactNameRef.current.value, backupContactNumberRef.current.value, detailsRef.current.value, selectedWorkerID, selectedDate, latRef, lngRef);
     }
 
     return(
@@ -173,6 +211,46 @@ function JobCreation(props) {
                     </form>
                 </div>
             </div>
+            <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                className="deleteModal"
+                open={submitOpen}
+                onClose={handleSubmitClose}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                timeout: 500,
+                }}
+            >
+                <Fade in={submitOpen}>
+                <div className="deletePaper">
+                    <div className="">
+                        <h2 id="transition-modal-title">Job Successfully Created</h2>
+                    </div>
+                </div>
+                </Fade>
+            </Modal>
+            <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                className="deleteModal"
+                open={alertOpen}
+                onClose={handleAlertClose}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                timeout: 500,
+                }}
+            >
+                <Fade in={alertOpen}>
+                <div className="deletePaper">
+                    <div className="">
+                        <h2 id="transition-modal-title">Please Fill In Everything</h2>
+                    </div>
+                </div>
+                </Fade>
+            </Modal>
         </React.Fragment>
     )
 }

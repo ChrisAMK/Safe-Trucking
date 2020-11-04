@@ -1,12 +1,12 @@
 import React from 'react';
 
-
 import { GoogleMap, useLoadScript, Marker,
     // InfoWindow,
   } from "@react-google-maps/api";
 
 function DriverJobView(props) {
 
+    // Setting up the google maps component
     const libraries = ["places"];
 
     const { isLoaded, loadError } = useLoadScript({

@@ -4,8 +4,10 @@ import API from "../../utils/API";
 
 function EditJobs(props) {
 
+    // setting up state
     const [ jobList, setJobList ] = useState([]);
     
+    // when the component renders, we query the database and set the results to the state
     useEffect(() => {
         const getJobList = async () => {
             const response = await API.viewAllJobs()
@@ -17,6 +19,7 @@ function EditJobs(props) {
         getJobList();
     },[jobList])
 
+    // Generates Job Components with the mapped info
     const generateJobList = (job, key) => {
         return (
             <EditJobComponent
@@ -36,7 +39,6 @@ function EditJobs(props) {
             />
         )
     }
-
 
     return(
         <React.Fragment>

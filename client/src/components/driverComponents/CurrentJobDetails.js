@@ -58,7 +58,6 @@ function CurrentJobDetails(props) {
                 await setFirstStart(true);
                 
             }
-
         }
        
         getPageInfo(userData.assignedJob, userData.id)
@@ -89,17 +88,17 @@ function CurrentJobDetails(props) {
         await API.startJob(id, userLat, userLng, jobId)
     }
 
+    // When the End button 
     const endJobHandler = async (id) => {
         setOnJob(false)
         await API.jobToOutOfProgress(id)
         await API.endJob(id)
     }
 
-
     return(
         <React.Fragment>
-            <button onClick={() => props.handlePageChange("")} className="backBtn">Back</button>
             <div className="row">
+            <button onClick={() => props.handlePageChange("")} className="backBtn">Back</button>
                 {(userData.assignedJob === null) ? 
                 // if user has no job assigned the code directly underneath is render as a error message
                 <div className="row">

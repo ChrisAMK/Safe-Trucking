@@ -45,7 +45,6 @@ function EditJobComponent(props) {
     const [ selectedWorker, setSelectedWorker ] = useState("");
     const [ selectedWorkerID, setSelectedWorkerID ] = useState("");
     const [ selectedDate, setSelectedDate] = useState(Date.now());
-    const [ nextJobId, setNextJobId ] = useState("");
 
     // Get selected workers ID gets the ID of the worker who matches the first and last name parsed in
     const getSelectedWorkersID = async (firstname, lastname) => {
@@ -84,14 +83,6 @@ function EditJobComponent(props) {
             await setEmployees(employeeList);
         };
 
-        // Counting how many jobs are in the database already so we know what id this job will become
-        const getLastJobID = async () => {
-            let jobs = await API.viewAllJobs()
-            let lastJob = [...jobs.data].pop();
-            await setNextJobId(lastJob.id + 1)
-        }
-
-        getLastJobID()
         getUserList()
         getNamefromID(props.worker_id);
     },[props.worker_id])
@@ -119,7 +110,7 @@ function EditJobComponent(props) {
     const submitHandler = (event) => {
         event.preventDefault();
         updateJob(props.id, clientRef.current.value, contactNameRef.current.value, contactNumberRef.current.value, backupContactNameRef.current.value, backupContactNumberRef.current.value, detailsRef.current.value, selectedWorkerID, selectedDate);
-        updateJobId(selectedWorkerID, nextJobId)
+        updateJobId(selectedWorkerID, props.id)
     }
 
     const handleDelete = () => {

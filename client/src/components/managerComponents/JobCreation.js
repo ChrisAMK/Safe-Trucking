@@ -88,7 +88,8 @@ function JobCreation(props) {
         const getLastJobID = async () => {
             let jobs = await API.viewAllJobs()
             let lastJob = [...jobs.data].pop();
-            await setJobCount(lastJob.id + 1)
+            (lastJob === undefined) ? await setJobCount(1) : await setJobCount(lastJob.id + 1)
+            // await setJobCount(lastJob.id + 1)
         }
 
         getLastJobID()

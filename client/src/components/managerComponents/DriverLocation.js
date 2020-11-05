@@ -1,39 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import API from '../../utils/API';
 
-import { makeStyles } from '@material-ui/core/styles';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import { format, formatDistanceToNowStrict, add } from "date-fns";
+import { MenuItem } from "@material-ui/core";
 
 import { GoogleMap, useLoadScript, Marker,
     // InfoWindow,
   } from "@react-google-maps/api";
 
 // use style hook for Material UI
-const useStyles = makeStyles((theme) => ({
-    root: {
-      '& .MuiTextField-root': {
-        margin: theme.spacing(1),
-        width: '25ch',
-      },
-    },
-  }));
-
 function DriverLocation(props) {
 
     // declaring our state and using the style declared above
-    const classes = useStyles();
-    const [ employees, setEmployees ] = useState([])
+    const [ employees, setEmployees ] = useState([]);
     const [ worker, setWorker ] = useState("");
     const [ selectedWorkerLat, setSelectedWorkerLat ] = useState("");
     const [ selectedWorkerLng, setSelectedWorkerLng ] = useState("");
     const [ startTime, setStartTime ] = useState(null);
     const [ pingTime, setPingTime ] = useState(null);
     const [ workerPhone, setWorkerPhone ] = useState(null);
-    const [ breakTime, setBreakTime ] = useState(null)
-    const [ ready, setReady ] = useState(false)
+    const [ breakTime, setBreakTime ] = useState(null);
+    const [ ready, setReady ] = useState(false);
+    const selectedWorkerRef = useRef("");
 
     // Function that gets the ID of the worker that matches the first and last name and once it gets the data back we set ready to true
     const getSelectedWorkersID = async (firstname, lastname) => {
@@ -99,12 +90,12 @@ function DriverLocation(props) {
                 <div className="col-12 heading">
                     <div className="form-group">
                     <h2 style={{textAlign: "center"}}>Choose a driver to Locate</h2>
-                    <FormControl fullWidth className={classes.formControl}>
+                    <FormControl fullWidth>
                         <InputLabel htmlFor="age-native-simple">Choose a worker for the Job</InputLabel>
-                        <Select value={worker} defaultValue="Choose a Worker" onChange={handleChange}>
-                        {employees.map((employee, key) => {
-                            return <option value={employee} key={key}>{employee}</option>
-                        })}
+                        <Select required style={{height:50, width:"100%"}} inputRef={selectedWorkerRef} onChange={handleChange}>
+                            {employees.map((employee, key) => {
+                            return <MenuItem value={employee} key={key}>{employee}</MenuItem>
+                            })}
                         </Select>
                     </FormControl>
                     </div>

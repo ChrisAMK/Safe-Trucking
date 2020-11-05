@@ -232,6 +232,7 @@ module.exports = function(server) {
     .then(() => {
       res.send("deleted");
     })
+    .then(result => res.json(result))
     .catch(error => console.log(error))
   });
 
@@ -244,6 +245,7 @@ module.exports = function(server) {
         id: req.body.id
       }
     })
+      .then(result => res.json(result))
       .catch(error => console.log("DB Delete ERROR", error))
   });
 
@@ -256,6 +258,7 @@ module.exports = function(server) {
         id: req.body.worker_id
       }
     })
+      .then(result => res.json(result))
       .catch(error => console.log("DB ERROR", error))
   });
 
@@ -267,6 +270,7 @@ module.exports = function(server) {
         id: req.body.worker_id
       }
     })
+      .then(result => res.json(result))
       .catch(error => console.log("DB ERROR", error))
   });
 

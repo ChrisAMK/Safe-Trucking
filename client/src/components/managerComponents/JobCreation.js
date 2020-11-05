@@ -3,7 +3,6 @@ import API from "../../utils/API";
 import JobAutoComplete from "./JobAutoComplete";
 
 import TextField from "@material-ui/core/TextField";
-import { makeStyles } from '@material-ui/core/styles';
 import Select from '@material-ui/core/Select';
 import { KeyboardDatePicker } from '@material-ui/pickers';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -11,23 +10,11 @@ import FormControl from '@material-ui/core/FormControl';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-
-
-// Use styles for Material UI
-const useStyles = makeStyles((theme) => ({
-    root: {
-      '& .MuiTextField-root': {
-        margin: theme.spacing(1),
-        width: '25ch',
-      },
-    },
-  }));
-
+import { MenuItem } from "@material-ui/core";
 
 function JobCreation(props) {
 
     // Declaring State and making use of our style for Material UI
-    const classes = useStyles();
     const clientRef = useRef("");
     const contactNameRef = useRef("");
     const contactNumberRef = useRef("");
@@ -39,12 +26,11 @@ function JobCreation(props) {
     const [ address, setAddress ] = useState("");
     const [ employees, setEmployees ] = useState([]);
     const [ selectedDate, setSelectedDate] = useState(Date.now());
-    const [ selectedWorker, setSelectedWorker ] = useState("");
     const [ selectedWorkerID, setSelectedWorkerID ] = useState("");
     const [ jobCount, setJobCount ] = useState("");
     const [submitOpen, setSubmitOpen] = useState(false);
     const [alertOpen, setAlertOpen] = useState(false);
-
+    const selectedWorkerRef = useRef("");
 
     // Submit Modal Functions
     const handleSubmitOpen = () => {
@@ -69,7 +55,6 @@ function JobCreation(props) {
 
     // Handle change listens for the change in the list of workers and once one is chosen we set the state and trigger the get selected worker ID Function
     const handleChange = (event) => {
-        setSelectedWorker(event.target.value);
         const workerString = event.target.value;
         const splitworker = workerString.split(' ');
         let firstname = splitworker[0];
@@ -117,19 +102,15 @@ function JobCreation(props) {
         getUserList();
     }, [latRef, lngRef, address])
 
-
     // Post Job is the function that sends the form data and state data to the API function
     const postJob = async (client, address, contactName, contactNumber, backupContactName, backupContactNumber, details, worker, deliveryDate, lat, lng) => {
-        console.log("This one",client, address, contactName, contactNumber, backupContactName, backupContactNumber, details, worker, deliveryDate, lat, lng)
-        if (client || address || contactName || contactNumber || backupContactName || backupContactNumber || details || worker || deliveryDate || lat || lng === "") {
-            console.log("EMPTY")
+        if (client === "" || address === "" || contactName === "" || contactNumber === "" || backupContactName === "" || backupContactNumber === "" || details === "" || worker === "" || deliveryDate === "" || lat === "" || lng === "") {
             alertInvalidForm()
         } else {
-            const postedJob = await API.createJob(client, address, contactName, contactNumber, backupContactName, backupContactNumber, details, worker, deliveryDate, lat, lng)
+            await handleSubmitOpen();
+            await clearFields();
+            await API.createJob(client, address, contactName, contactNumber, backupContactName, backupContactNumber, details, worker, deliveryDate, lat, lng)
             await postJobID(jobCount, selectedWorkerID)
-            await console.log(postedJob)
-            handleSubmitOpen();
-            clearFields();
         }
     }
 
@@ -140,8 +121,7 @@ function JobCreation(props) {
 
     // postJobID assigns this new job to the chosen worker
     const postJobID = async (jobCount, worker_id) => {
-        const postID = await API.updateAssignedJobID(jobCount, worker_id);
-        await console.log(postID);
+        await API.updateAssignedJobID(jobCount, worker_id);
     }
 
     const clearFields = () => {
@@ -182,12 +162,20 @@ function JobCreation(props) {
                                     <TextField fullWidth required inputRef={contactNumberRef} label="Enter Contact Number" width="100%"/>
                                 </div>
                                 <div className="form-group">
-                                    <FormControl fullWidth className={classes.formControl}>
+                                    {/* <FormControl fullWidth className={classes.formControl}>
                                         <InputLabel htmlFor="age-native-simple">Choose a worker for the Job</InputLabel>
                                         <Select fullWidth value={selectedWorker} onChange={handleChange}>
                                         {employees.map((employee, key) => {
                                             return <option value={employee} key={key}>{employee}</option>
                                         })}
+                                        </Select>
+                                    </FormControl> */}
+                                    <FormControl fullWidth>
+                                        <InputLabel htmlFor="age-native-simple">Choose a worker for the Job</InputLabel>
+                                        <Select required labelId="demo-simple-select-label" style={{height:50, width:"100%"}} inputRef={selectedWorkerRef} onChange={handleChange}>
+                                            {employees.map((employee, key) => {
+                                            return <MenuItem value={employee} key={key}>{employee}</MenuItem>
+                                            })}
                                         </Select>
                                     </FormControl>
                                 </div>

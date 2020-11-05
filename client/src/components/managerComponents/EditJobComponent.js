@@ -15,6 +15,20 @@ import UserProvider from '../../utils/UserContext';
 function EditJobComponent(props) {
 
     const userData = useContext(UserProvider.context);
+    const [ workerFirstName, setWorkerFirstName ] = useState("");
+    const [ workerLastName, setWorkerLastName ] = useState("");
+    const [editOpen, setEditOpen] = useState(false);
+    const [deleteOpen, setDeleteOpen] = useState(false);
+    const [ employees, setEmployees ] = useState([]);
+    const [ selectedWorkerID, setSelectedWorkerID ] = useState("");
+    const [ selectedDate, setSelectedDate] = useState(Date.now());
+    const selectedWorkerRef = useRef("");
+    const clientRef = useRef("");
+    const contactNameRef = useRef("");
+    const contactNumberRef = useRef("");
+    const backupContactNameRef = useRef("");
+    const backupContactNumberRef = useRef("");
+    const detailsRef = useRef("");
 
     // Modal open and close handlers
     const handleEditOpen = () => {
@@ -26,27 +40,9 @@ function EditJobComponent(props) {
     const handleDeleteOpen = () => {
         setDeleteOpen(true);
     };
-      const handleDeleteClose = () => {
+        const handleDeleteClose = () => {
         setDeleteOpen(false);
     };
-
-    const [ workerFirstName, setWorkerFirstName ] = useState("");
-    const [ workerLastName, setWorkerLastName ] = useState("");
-    const [editOpen, setEditOpen] = useState(false);
-    const [deleteOpen, setDeleteOpen] = useState(false);
-    const [ employees, setEmployees ] = useState([]);
-    const [ selectedWorker, setSelectedWorker ] = useState("");
-    const [ selectedWorkerID, setSelectedWorkerID ] = useState("");
-    const [ selectedDate, setSelectedDate] = useState(Date.now());
-
-    const selectedWorkerRef = useRef("");
-    const clientRef = useRef("");
-    const contactNameRef = useRef("");
-    const contactNumberRef = useRef("");
-    const backupContactNameRef = useRef("");
-    const backupContactNumberRef = useRef("");
-    const detailsRef = useRef("");
-
 
     // Get selected workers ID gets the ID of the worker who matches the first and last name parsed in
     const getSelectedWorkersID = async (firstname, lastname) => {
@@ -56,7 +52,6 @@ function EditJobComponent(props) {
 
     // Handles worker list selection
     const handleChange = (event) => {
-        setSelectedWorker(event.target.value);
         const workerString = event.target.value;
         const splitworker = workerString.split(' ');
         let firstname = splitworker[0];
@@ -69,32 +64,10 @@ function EditJobComponent(props) {
         setSelectedDate(date);
     };
 
-    useEffect(() => {
-        const getNamefromID = async (worker_id) => {
-            const name = await API.getNamefromID(worker_id)
-            await setWorkerFirstName(name.data[0].firstname)
-            await setWorkerLastName(name.data[0].lastname)
-        }
-
-        // Making an array of employees to be used in a selection list
-        const getUserList = async () => {
-            let employeeList = [];
-            const users = await API.getUserList();
-            await users.data.forEach(name => {
-                employeeList.push(`${name.firstname} ${name.lastname}`);
-            });
-            await setEmployees(employeeList);
-        };
-
-        getUserList()
-        getNamefromID(props.worker_id);
-    },[props.worker_id])
-
-
     // Post Job is the function that sends the form data and state data to the API function
     const updateJob = async (id, client, contactName, contactNumber, backupContactName, backupContactNumber, details, worker, deliveryDate) => {
         const postedJob = await API.updateJob(id, client, contactName, contactNumber, backupContactName, backupContactNumber, details, worker, deliveryDate)
-        await console.log(postedJob, selectedWorker)
+        await console.log(postedJob)
     }
 
     const deleteJob = async (id) => {
@@ -121,6 +94,27 @@ function EditJobComponent(props) {
         deleteJob(props.id)
         deleteJobId(props.worker_id)
     }
+    
+    useEffect(() => {
+        const getNamefromID = async (worker_id) => {
+            const name = await API.getNamefromID(worker_id)
+            await setWorkerFirstName(name.data[0].firstname)
+            await setWorkerLastName(name.data[0].lastname)
+        }
+
+        // Making an array of employees to be used in a selection list
+        const getUserList = async () => {
+            let employeeList = [];
+            const users = await API.getUserList();
+            await users.data.forEach(name => {
+                employeeList.push(`${name.firstname} ${name.lastname}`);
+            });
+            await setEmployees(employeeList);
+        };
+
+        getUserList()
+        getNamefromID(props.worker_id);
+    },[props.worker_id])
 
     return(
         <div className="row">
@@ -168,7 +162,7 @@ function EditJobComponent(props) {
                                     <FormControl fullWidth>
                                         <InputLabel htmlFor="age-native-simple">Choose a worker for the Job</InputLabel>
                                         <Select required labelId="demo-simple-select-label" style={{height:50, width:"100%"}} inputRef={selectedWorkerRef} defaultValue={userData.gender} onChange={handleChange}>
-                                            <MenuItem value={"Male"}>{`${workerFirstName} ${workerLastName}`}</MenuItem>
+                                            <MenuItem value={`${workerFirstName} ${workerLastName}`}>{`${workerFirstName} ${workerLastName}`}</MenuItem>
                                             {employees.map((employee, key) => {
                                             return <MenuItem value={employee} key={key}>{employee}</MenuItem>
                                             })}

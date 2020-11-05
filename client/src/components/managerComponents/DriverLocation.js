@@ -114,7 +114,7 @@ function DriverLocation(props) {
                     <div className="col-6 col-sm-6 col-md-4">
                         {(breakTime === null) ? <p></p> : <React.Fragment><h6>Driver is due for a Break:</h6> <h3>{(formatDistanceToNowStrict(parseInt(breakTime), { addSuffix: true, includeSeconds: true }))}</h3></React.Fragment>}
                     </div>
-                    <div className="col-6 col-sm-6 col-md-4">
+                    <div className="col-12 col-sm-12 col-md-4">
                         {(pingTime === null) ? <p></p> : <React.Fragment><h6>Latest Check-in: </h6> <h3>{(formatDistanceToNowStrict(parseInt(pingTime), { addSuffix: true, includeSeconds: true }))}</h3></React.Fragment>}
                     </div>
                 </div>

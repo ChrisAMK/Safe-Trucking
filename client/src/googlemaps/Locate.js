@@ -2,6 +2,7 @@ import React from "react";
 
 function Locate({ panTo }) {
 
+    // Get's users location from javascripts inbuilt geolocation module
     const getLocation = () => {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
